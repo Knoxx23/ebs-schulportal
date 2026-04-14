@@ -1,0 +1,332 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const uuid_1 = require("uuid");
+const database_1 = __importDefault(require("../database"));
+const auth_1 = require("../middleware/auth");
+const rateLimit_1 = require("../middleware/rateLimit");
+const auditService_1 = require("../services/auditService");
+const pdfkit_1 = __importDefault(require("pdfkit"));
+const router = (0, express_1.Router)();
+// POST /api/parent/activate - validate token+code, create session
+router.post('/activate', rateLimit_1.parentActivateRateLimit, async (req, res) => {
+    const { token, code } = req.body;
+    if (!token || !code) {
+        return res.status(400).json({ error: 'Token und Code erforderlich' });
+    }
+    const trimmedToken = token.trim();
+    const trimmedCode = code.trim().toUpperCase();
+    const invitation = database_1.default.prepare(`
+    SELECT * FROM invitations
+    WHERE token = ? AND code = ? AND expires_at > datetime('now')
+  `).get(trimmedToken, trimmedCode);
+    if (!invitation) {
+        await (0, auditService_1.auditLog)({
+            eventType: 'activation_failed',
+            actorType: 'parent',
+            details: { token: token.substring(0, 8) + '...', reason: 'invalid_token_or_code' },
+            ipAddress: req.ip,
+        });
+        return res.status(400).json({ error: 'Ungültiger oder abgelaufener Aktivierungscode' });
+    }
+    if (invitation.status === 'expired') {
+        return res.status(400).json({ error: 'Diese Einladung ist abgelaufen' });
+    }
+    if (invitation.status === 'completed') {
+        return res.status(400).json({ error: 'Diese Einladung wurde bereits abgeschlossen' });
+    }
+    // Create or retrieve case
+    let caseRecord = database_1.default.prepare('SELECT * FROM cases WHERE invitation_id = ?').get(invitation.id);
+    if (!caseRecord) {
+        const result = database_1.default.prepare(`
+      INSERT INTO cases (invitation_id, status, last_name, first_name, language)
+      VALUES (?, 'draft', ?, ?, 'de')
+    `).run(invitation.id, invitation.child_last_name || '', invitation.child_first_name || '');
+        caseRecord = database_1.default.prepare('SELECT * FROM cases WHERE id = ?').get(result.lastInsertRowid);
+    }
+    // Create session
+    const sessionId = (0, uuid_1.v4)();
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24 hours
+    database_1.default.prepare(`
+    INSERT INTO parent_sessions (session_id, invitation_id, expires_at, ip_address)
+    VALUES (?, ?, ?, ?)
+  `).run(sessionId, invitation.id, expiresAt, req.ip);
+    // Update invitation status
+    if (invitation.status === 'pending') {
+        database_1.default.prepare(`
+      UPDATE invitations SET status = 'activated', activated_at = datetime('now'), session_id = ?
+      WHERE id = ?
+    `).run(sessionId, invitation.id);
+    }
+    await (0, auditService_1.auditLog)({
+        eventType: 'invitation_activated',
+        actorType: 'parent',
+        caseId: caseRecord.id,
+        details: { invitationId: invitation.id },
+        ipAddress: req.ip,
+    });
+    // Set parent session cookie
+    res.cookie('parent-session', sessionId, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        path: '/',
+    });
+    return res.json({
+        message: 'Activation successful',
+        case: sanitizeCaseForParent(caseRecord),
+        invitation: {
+            childLastName: invitation.child_last_name,
+            childFirstName: invitation.child_first_name,
+            classRef: invitation.class_ref,
+        },
+    });
+});
+// GET /api/parent/case - get current case
+router.get('/case', auth_1.requireParentSession, (req, res) => {
+    const caseRecord = database_1.default.prepare(`
+    SELECT c.* FROM cases c
+    JOIN invitations i ON i.id = c.invitation_id
+    WHERE c.invitation_id = ?
+  `).get(req.parentInvitationId);
+    if (!caseRecord) {
+        return res.status(404).json({ error: 'Case nicht gefunden' });
+    }
+    return res.json({ case: sanitizeCaseForParent(caseRecord) });
+});
+// PUT /api/parent/case - save/update case (auto-save)
+router.put('/case', auth_1.requireParentSession, async (req, res) => {
+    const caseRecord = database_1.default.prepare(`
+    SELECT c.* FROM cases c
+    WHERE c.invitation_id = ?
+  `).get(req.parentInvitationId);
+    if (!caseRecord) {
+        return res.status(404).json({ error: 'Case nicht gefunden' });
+    }
+    if (caseRecord.status === 'approved' || caseRecord.status === 'archived') {
+        return res.status(403).json({ error: 'Abgeschlossene Cases können nicht bearbeitet werden' });
+    }
+    const { last_name, first_name, birth_date, birth_place, gender, nationality, guardian_name, guardian_street, guardian_zip, guardian_city, phone, email, kindergarten, enrollment_year, enrollment_date, future_path, future_school, future_notes, language, consent_given, consent_timestamp, } = req.body;
+    // Validate future_path
+    if (future_path && !['A', 'B', 'C', 'D'].includes(future_path)) {
+        return res.status(400).json({ error: 'Ungültiger future_path Wert' });
+    }
+    database_1.default.prepare(`
+    UPDATE cases SET
+      last_name = ?, first_name = ?, birth_date = ?, birth_place = ?, gender = ?, nationality = ?,
+      guardian_name = ?, guardian_street = ?, guardian_zip = ?, guardian_city = ?,
+      phone = ?, email = ?,
+      kindergarten = ?, enrollment_year = ?, enrollment_date = ?,
+      future_path = ?, future_school = ?, future_notes = ?,
+      language = ?,
+      updated_at = datetime('now')
+    WHERE id = ?
+  `).run(last_name || null, first_name || null, birth_date || null, birth_place || null, gender || null, nationality || null, guardian_name || null, guardian_street || null, guardian_zip || null, guardian_city || null, phone || null, email || null, kindergarten || null, enrollment_year || null, enrollment_date || null, future_path || null, future_school || null, future_notes || null, language || 'de', caseRecord.id);
+    // Log consent if provided
+    if (consent_given === true) {
+        database_1.default.prepare(`
+      INSERT INTO consent_log (case_id, consent_type, given_at, ip_address)
+      VALUES (?, ?, ?, ?)
+    `).run(caseRecord.id, 'enrollment_data_processing', consent_timestamp || new Date().toISOString(), req.ip || null);
+    }
+    const updated = database_1.default.prepare('SELECT * FROM cases WHERE id = ?').get(caseRecord.id);
+    return res.json({ case: sanitizeCaseForParent(updated) });
+});
+// POST /api/parent/case/submit - submit case
+router.post('/case/submit', auth_1.requireParentSession, async (req, res) => {
+    const caseRecord = database_1.default.prepare(`
+    SELECT c.* FROM cases c WHERE c.invitation_id = ?
+  `).get(req.parentInvitationId);
+    if (!caseRecord) {
+        return res.status(404).json({ error: 'Case nicht gefunden' });
+    }
+    if (caseRecord.status === 'submitted' || caseRecord.status === 'approved') {
+        return res.status(400).json({ error: 'Case ist bereits eingereicht oder genehmigt' });
+    }
+    // Validation
+    const required = ['last_name', 'first_name', 'birth_date', 'birth_place', 'gender', 'guardian_name', 'guardian_street', 'guardian_zip', 'guardian_city', 'phone'];
+    const missing = required.filter(field => !caseRecord[field]);
+    if (missing.length > 0) {
+        return res.status(400).json({ error: `Missing required fields: ${missing.join(', ')}` });
+    }
+    // Validate German postal code (5 digits)
+    if (caseRecord.guardian_zip && !/^\d{5}$/.test(caseRecord.guardian_zip)) {
+        return res.status(400).json({ error: 'Postleitzahl muss 5 Ziffern haben' });
+    }
+    // Validate birth date is in the past
+    if (caseRecord.birth_date) {
+        const birthDate = new Date(caseRecord.birth_date);
+        if (isNaN(birthDate.getTime()) || birthDate >= new Date()) {
+            return res.status(400).json({ error: 'Geburtsdatum muss in der Vergangenheit liegen' });
+        }
+    }
+    // Validate phone number (basic: at least 6 digits)
+    if (caseRecord.phone) {
+        const digits = caseRecord.phone.replace(/[^0-9]/g, '');
+        if (digits.length < 6) {
+            return res.status(400).json({ error: 'Telefonnummer ist zu kurz' });
+        }
+    }
+    database_1.default.prepare(`
+    UPDATE cases SET status = 'submitted', submitted_at = datetime('now'), updated_at = datetime('now')
+    WHERE id = ?
+  `).run(caseRecord.id);
+    // Update invitation status
+    database_1.default.prepare(`
+    UPDATE invitations SET status = 'completed' WHERE id = ?
+  `).run(req.parentInvitationId);
+    await (0, auditService_1.auditLog)({
+        eventType: 'case_submitted',
+        actorType: 'parent',
+        caseId: caseRecord.id,
+        details: {},
+        ipAddress: req.ip,
+    });
+    const updated = database_1.default.prepare('SELECT * FROM cases WHERE id = ?').get(caseRecord.id);
+    return res.json({ case: sanitizeCaseForParent(updated) });
+});
+// GET /api/parent/case/status - get status (minimal)
+router.get('/case/status', auth_1.requireParentSession, (req, res) => {
+    const caseRecord = database_1.default.prepare(`
+    SELECT id, status, submitted_at, return_note FROM cases WHERE invitation_id = ?
+  `).get(req.parentInvitationId);
+    if (!caseRecord) {
+        return res.status(404).json({ error: 'Case nicht gefunden' });
+    }
+    return res.json({
+        id: caseRecord.id,
+        status: caseRecord.status,
+        submittedAt: caseRecord.submitted_at,
+        returnNote: caseRecord.status === 'returned' ? caseRecord.return_note : null,
+    });
+});
+// GET /api/parent/case/export - export personal data (DSGVO Art. 15)
+router.get('/case/export', auth_1.requireParentSession, (req, res) => {
+    const caseRecord = database_1.default.prepare(`
+    SELECT c.* FROM cases c
+    WHERE c.invitation_id = ?
+  `).get(req.parentInvitationId);
+    if (!caseRecord) {
+        return res.status(404).json({ error: 'Case nicht gefunden' });
+    }
+    // Get audit log entries for this case
+    const auditLogs = database_1.default.prepare(`
+    SELECT * FROM audit_log WHERE case_id = ?
+    ORDER BY created_at DESC
+  `).all(caseRecord.id);
+    // Get consent logs for this case
+    const consentLogs = database_1.default.prepare(`
+    SELECT * FROM consent_log WHERE case_id = ?
+    ORDER BY created_at DESC
+  `).all(caseRecord.id);
+    // Create PDF document
+    const doc = new pdfkit_1.default({ margin: 50 });
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename="meine-daten-dsgvo.pdf"');
+    doc.pipe(res);
+    // Header
+    doc.fontSize(20).text('DSGVO-Datenauskunft (Art. 15 DSGVO)', { align: 'center' });
+    doc.moveDown();
+    doc.fontSize(12).text(`Erstellt am: ${new Date().toLocaleString('de-DE')}`, { align: 'right' });
+    doc.moveDown(2);
+    // Section 1: Child Data
+    doc.fontSize(16).text('1. Daten des Kindes', { underline: true });
+    doc.moveDown(0.5);
+    doc.fontSize(12)
+        .text(`Name: ${caseRecord.first_name || '-'} ${caseRecord.last_name || '-'}`)
+        .text(`Geburtsdatum: ${caseRecord.birth_date ? new Date(caseRecord.birth_date).toLocaleDateString('de-DE') : '-'}`)
+        .text(`Geburtsort: ${caseRecord.birth_place || '-'}`)
+        .text(`Geschlecht: ${caseRecord.gender || '-'}`)
+        .text(`Staatsangehörigkeit: ${caseRecord.nationality || '-'}`);
+    doc.moveDown();
+    // Section 2: Guardian Data
+    doc.fontSize(16).text('2. Daten der Erziehungsberechtigten', { underline: true });
+    doc.moveDown(0.5);
+    doc.fontSize(12)
+        .text(`Name: ${caseRecord.guardian_name || '-'}`)
+        .text(`Straße: ${caseRecord.guardian_street || '-'}`)
+        .text(`PLZ/Ort: ${caseRecord.guardian_zip || '-'} ${caseRecord.guardian_city || '-'}`)
+        .text(`Telefon: ${caseRecord.phone || '-'}`)
+        .text(`E-Mail: ${caseRecord.email || '-'}`);
+    doc.moveDown();
+    // Section 3: School Data
+    doc.fontSize(16).text('3. Schullaufbahn', { underline: true });
+    doc.moveDown(0.5);
+    doc.fontSize(12)
+        .text(`Kindergarten/Kita: ${caseRecord.kindergarten || '-'}`)
+        .text(`Einschulungsjahr: ${caseRecord.enrollment_year || '-'}`)
+        .text(`Aufnahmedatum: ${caseRecord.enrollment_date ? new Date(caseRecord.enrollment_date).toLocaleDateString('de-DE') : '-'}`)
+        .text(`Künftige Tätigkeit: ${caseRecord.future_path || '-'}`)
+        .text(`Künftige Schule: ${caseRecord.future_school || '-'}`)
+        .text(`Bemerkungen: ${caseRecord.future_notes || '-'}`);
+    doc.moveDown();
+    // Section 4: Metadata & Consent
+    doc.fontSize(16).text('4. Metadaten & Einwilligungen', { underline: true });
+    doc.moveDown(0.5);
+    doc.fontSize(12)
+        .text(`Fall-ID: ${caseRecord.id}`)
+        .text(`Status: ${caseRecord.status}`)
+        .text(`Sprache: ${caseRecord.language}`)
+        .text(`Erstellt am: ${new Date(caseRecord.created_at).toLocaleString('de-DE')}`);
+    if (caseRecord.submitted_at) {
+        doc.text(`Eingereicht am: ${new Date(caseRecord.submitted_at).toLocaleString('de-DE')}`);
+    }
+    doc.moveDown();
+    doc.fontSize(14).text('Protokollierte Einwilligungen:');
+    if (consentLogs.length === 0) {
+        doc.fontSize(12).text('- Keine Einwilligungen gefunden');
+    }
+    else {
+        consentLogs.forEach((log) => {
+            doc.fontSize(12).text(`- ${log.consent_type} am ${new Date(log.given_at).toLocaleString('de-DE')} (IP: ${log.ip_address || 'Unbekannt'})`);
+        });
+    }
+    doc.moveDown();
+    doc.fontSize(14).text('Aktivitätsprotokoll (Audit Log):');
+    if (auditLogs.length === 0) {
+        doc.fontSize(12).text('- Keine Aktivitäten gefunden');
+    }
+    else {
+        auditLogs.slice(0, 10).forEach((log) => {
+            doc.fontSize(12).text(`- ${new Date(log.created_at).toLocaleString('de-DE')}: ${log.event_type} (${log.actor_type})`);
+        });
+        if (auditLogs.length > 10) {
+            doc.fontSize(12).text(`- ... und ${auditLogs.length - 10} weitere Einträge`);
+        }
+    }
+    doc.end();
+});
+function sanitizeCaseForParent(c) {
+    return {
+        id: c.id,
+        status: c.status,
+        last_name: c.last_name,
+        first_name: c.first_name,
+        birth_date: c.birth_date,
+        birth_place: c.birth_place,
+        gender: c.gender,
+        nationality: c.nationality,
+        guardian_name: c.guardian_name,
+        guardian_street: c.guardian_street,
+        guardian_zip: c.guardian_zip,
+        guardian_city: c.guardian_city,
+        phone: c.phone,
+        email: c.email,
+        kindergarten: c.kindergarten,
+        enrollment_year: c.enrollment_year,
+        enrollment_date: c.enrollment_date,
+        future_path: c.future_path,
+        future_school: c.future_school,
+        future_notes: c.future_notes,
+        language: c.language,
+        updated_at: c.updated_at,
+        submitted_at: c.submitted_at,
+        return_note: c.return_note,
+    };
+}
+exports.default = router;
+//# sourceMappingURL=parent.js.map

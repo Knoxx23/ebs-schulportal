@@ -4,6 +4,7 @@ import db from '../database';
 import { requireParentSession, AuthRequest } from '../middleware/auth';
 import { parentActivateRateLimit } from '../middleware/rateLimit';
 import { auditLog } from '../services/auditService';
+import PDFDocument from 'pdfkit';
 
 const router = Router();
 
@@ -289,54 +290,91 @@ router.get('/case/export', requireParentSession, (req: AuthRequest, res: Respons
     ORDER BY created_at DESC
   `).all(caseRecord.id) as any[];
 
-  // Compile export object
-  const exportData = {
-    exportedAt: new Date().toISOString(),
-    dataSubject: {
-      childName: {
-        firstName: caseRecord.first_name,
-        lastName: caseRecord.last_name,
-      },
-      childPersonalData: {
-        birthDate: caseRecord.birth_date,
-        birthPlace: caseRecord.birth_place,
-        gender: caseRecord.gender,
-        nationality: caseRecord.nationality,
-      },
-      guardianContactData: {
-        name: caseRecord.guardian_name,
-        street: caseRecord.guardian_street,
-        postalCode: caseRecord.guardian_zip,
-        city: caseRecord.guardian_city,
-        phone: caseRecord.phone,
-        email: caseRecord.email,
-      },
-    },
-    enrollmentData: {
-      kindergarten: caseRecord.kindergarten,
-      enrollmentYear: caseRecord.enrollment_year,
-      enrollmentDate: caseRecord.enrollment_date,
-      futurePath: caseRecord.future_path,
-      futureSchool: caseRecord.future_school,
-      futureNotes: caseRecord.future_notes,
-    },
-    caseMetadata: {
-      caseId: caseRecord.id,
-      status: caseRecord.status,
-      language: caseRecord.language,
-      createdAt: caseRecord.created_at,
-      updatedAt: caseRecord.updated_at,
-      submittedAt: caseRecord.submitted_at,
-      approvedAt: caseRecord.approved_at,
-    },
-    auditLog: auditLogs,
-    consentLog: consentLogs,
-    exportLegalBasis: 'DSGVO Art. 15 (Auskunftsrecht / Right of Access)',
-  };
-
-  res.setHeader('Content-Type', 'application/json');
-  res.setHeader('Content-Disposition', 'attachment; filename="meine-daten.json"');
-  return res.json(exportData);
+  // Create PDF document
+  const doc = new PDFDocument({ margin: 50 });
+  
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader('Content-Disposition', 'attachment; filename="meine-daten-dsgvo.pdf"');
+  
+  doc.pipe(res);
+  
+  // Header
+  doc.fontSize(20).text('DSGVO-Datenauskunft (Art. 15 DSGVO)', { align: 'center' });
+  doc.moveDown();
+  doc.fontSize(12).text(`Erstellt am: ${new Date().toLocaleString('de-DE')}`, { align: 'right' });
+  doc.moveDown(2);
+  
+  // Section 1: Child Data
+  doc.fontSize(16).text('1. Daten des Kindes', { underline: true });
+  doc.moveDown(0.5);
+  doc.fontSize(12)
+     .text(`Name: ${caseRecord.first_name || '-'} ${caseRecord.last_name || '-'}`)
+     .text(`Geburtsdatum: ${caseRecord.birth_date ? new Date(caseRecord.birth_date).toLocaleDateString('de-DE') : '-'}`)
+     .text(`Geburtsort: ${caseRecord.birth_place || '-'}`)
+     .text(`Geschlecht: ${caseRecord.gender || '-'}`)
+     .text(`Staatsangehörigkeit: ${caseRecord.nationality || '-'}`);
+  doc.moveDown();
+  
+  // Section 2: Guardian Data
+  doc.fontSize(16).text('2. Daten der Erziehungsberechtigten', { underline: true });
+  doc.moveDown(0.5);
+  doc.fontSize(12)
+     .text(`Name: ${caseRecord.guardian_name || '-'}`)
+     .text(`Straße: ${caseRecord.guardian_street || '-'}`)
+     .text(`PLZ/Ort: ${caseRecord.guardian_zip || '-'} ${caseRecord.guardian_city || '-'}`)
+     .text(`Telefon: ${caseRecord.phone || '-'}`)
+     .text(`E-Mail: ${caseRecord.email || '-'}`);
+  doc.moveDown();
+  
+  // Section 3: School Data
+  doc.fontSize(16).text('3. Schullaufbahn', { underline: true });
+  doc.moveDown(0.5);
+  doc.fontSize(12)
+     .text(`Kindergarten/Kita: ${caseRecord.kindergarten || '-'}`)
+     .text(`Einschulungsjahr: ${caseRecord.enrollment_year || '-'}`)
+     .text(`Aufnahmedatum: ${caseRecord.enrollment_date ? new Date(caseRecord.enrollment_date).toLocaleDateString('de-DE') : '-'}`)
+     .text(`Künftige Tätigkeit: ${caseRecord.future_path || '-'}`)
+     .text(`Künftige Schule: ${caseRecord.future_school || '-'}`)
+     .text(`Bemerkungen: ${caseRecord.future_notes || '-'}`);
+  doc.moveDown();
+  
+  // Section 4: Metadata & Consent
+  doc.fontSize(16).text('4. Metadaten & Einwilligungen', { underline: true });
+  doc.moveDown(0.5);
+  doc.fontSize(12)
+     .text(`Fall-ID: ${caseRecord.id}`)
+     .text(`Status: ${caseRecord.status}`)
+     .text(`Sprache: ${caseRecord.language}`)
+     .text(`Erstellt am: ${new Date(caseRecord.created_at).toLocaleString('de-DE')}`);
+  
+  if (caseRecord.submitted_at) {
+    doc.text(`Eingereicht am: ${new Date(caseRecord.submitted_at).toLocaleString('de-DE')}`);
+  }
+  
+  doc.moveDown();
+  doc.fontSize(14).text('Protokollierte Einwilligungen:');
+  if (consentLogs.length === 0) {
+    doc.fontSize(12).text('- Keine Einwilligungen gefunden');
+  } else {
+    consentLogs.forEach((log: any) => {
+      doc.fontSize(12).text(`- ${log.consent_type} am ${new Date(log.given_at).toLocaleString('de-DE')} (IP: ${log.ip_address || 'Unbekannt'})`);
+    });
+  }
+  
+  doc.moveDown();
+  doc.fontSize(14).text('Aktivitätsprotokoll (Audit Log):');
+  if (auditLogs.length === 0) {
+    doc.fontSize(12).text('- Keine Aktivitäten gefunden');
+  } else {
+    auditLogs.slice(0, 10).forEach((log: any) => { // Limit to 10 to avoid huge PDFs
+      doc.fontSize(12).text(`- ${new Date(log.created_at).toLocaleString('de-DE')}: ${log.event_type} (${log.actor_type})`);
+    });
+    if (auditLogs.length > 10) {
+      doc.fontSize(12).text(`- ... und ${auditLogs.length - 10} weitere Einträge`);
+    }
+  }
+  
+  doc.end();
 });
 
 function sanitizeCaseForParent(c: any) {

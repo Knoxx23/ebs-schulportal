@@ -41,15 +41,16 @@ export default function StatusPage() {
       if (!response.ok) {
         throw new Error('Export fehlgeschlagen');
       }
-      const data = await response.json();
-      const dataStr = JSON.stringify(data, null, 2);
-      const dataBlob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(dataBlob);
+      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'meine-daten.json';
+      link.download = 'meine-daten-dsgvo.pdf';
+      document.body.appendChild(link);
       link.click();
-      URL.revokeObjectURL(url);
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
     } catch (err) {
       setError('Datenexport fehlgeschlagen. Bitte später versuchen.');
     } finally {
