@@ -194,7 +194,7 @@ export default function Step2Family({ data, t, onNext, onBack }: Step2Props) {
             </div>
           </div>
         </div>
-      </div>>
+      </div>
 
       <div className="pt-4 flex justify-between">
         <button type="button" onClick={onBack} className="btn-secondary px-6">
