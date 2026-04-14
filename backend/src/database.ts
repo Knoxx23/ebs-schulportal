@@ -290,6 +290,49 @@ export async function initDatabase(): Promise<void> {
     CREATE INDEX IF NOT EXISTS idx_consent_log_created_at ON consent_log(created_at);
   `);
 
+  // Migration: Add new fields from EBS_blanko.doc (run safely with IF NOT EXISTS pattern)
+  const newColumns = [
+    // Step 1 - Personal data
+    { col: 'birth_country',        def: 'TEXT' },
+    { col: 'immigration_year',     def: 'TEXT' },
+    { col: 'confession',           def: 'TEXT' },
+    { col: 'mother_tongue',        def: 'TEXT' },
+    { col: 'aussiedler',           def: 'TEXT' },
+    // Step 2 - Family
+    { col: 'emergency_phone',      def: 'TEXT' },
+    { col: 'guardian_1_last_name', def: 'TEXT' },
+    { col: 'guardian_1_first_name',def: 'TEXT' },
+    { col: 'guardian_1_birth_country', def: 'TEXT' },
+    { col: 'guardian_2_last_name', def: 'TEXT' },
+    { col: 'guardian_2_first_name',def: 'TEXT' },
+    { col: 'guardian_2_birth_country', def: 'TEXT' },
+    // Step 3 - School history
+    { col: 'last_school_type',     def: 'TEXT' },
+    { col: 'last_school_name',     def: 'TEXT' },
+    { col: 'graduation_expected',  def: 'TEXT' },
+    { col: 'graduation_class',     def: 'TEXT' },
+    // Step 4 - Future path details
+    { col: 'future_company_name',  def: 'TEXT' },
+    { col: 'future_company_phone', def: 'TEXT' },
+    { col: 'future_company_address', def: 'TEXT' },
+    { col: 'future_job_title',     def: 'TEXT' },
+    { col: 'future_duration_from', def: 'TEXT' },
+    { col: 'future_duration_to',   def: 'TEXT' },
+    { col: 'future_school_address',def: 'TEXT' },
+    { col: 'future_school_class',  def: 'TEXT' },
+    { col: 'future_berufsfeld',    def: 'TEXT' },
+    { col: 'future_measure_name',  def: 'TEXT' },
+    { col: 'future_measure_org',   def: 'TEXT' },
+    { col: 'future_measure_from',  def: 'TEXT' },
+    { col: 'future_measure_to',    def: 'TEXT' },
+  ];
+  const existingCols = dbInstance.prepare("PRAGMA table_info(cases)").all().map((r: any) => r.name);
+  for (const { col, def } of newColumns) {
+    if (!existingCols.includes(col)) {
+      dbInstance.exec(`ALTER TABLE cases ADD COLUMN ${col} ${def}`);
+    }
+  }
+
   // Create default admin user if none exists
   const adminExists = dbInstance.prepare('SELECT id FROM users WHERE role = ?').get('admin');
   if (!adminExists) {

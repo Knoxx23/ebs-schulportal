@@ -7,6 +7,19 @@ interface FormData {
   future_path: string;
   future_school: string;
   future_notes: string;
+  future_company_name: string;
+  future_company_phone: string;
+  future_company_address: string;
+  future_job_title: string;
+  future_duration_from: string;
+  future_duration_to: string;
+  future_school_address: string;
+  future_school_class: string;
+  future_berufsfeld: string;
+  future_measure_name: string;
+  future_measure_org: string;
+  future_measure_from: string;
+  future_measure_to: string;
 }
 
 interface Step4Props {
@@ -17,10 +30,10 @@ interface Step4Props {
 }
 
 const pathOptions = [
-  { value: 'A', label: 'A', desc: 'Weiterführende Schule', icon: '🏫' },
-  { value: 'B', label: 'B', desc: 'Berufsausbildung', icon: '🔧' },
-  { value: 'C', label: 'C', desc: 'Weiterhin Schule', icon: '📚' },
-  { value: 'D', label: 'D', desc: 'Sonstiges', icon: '📝' },
+  { value: 'A', label: 'A', desc: 'Weiterführende Schule', icon: '🏢' },
+  { value: 'B', label: 'B', desc: 'Berufsausbildung / Betrieb', icon: '🔧' },
+  { value: 'C', label: 'C', desc: 'Weiterhin Schule (BVB/BVJ)', icon: '📚' },
+  { value: 'D', label: 'D', desc: 'Sonstige Maßnahme', icon: '📝' },
 ];
 
 export default function Step4Future({ data, t, onNext, onBack }: Step4Props) {
@@ -35,6 +48,19 @@ export default function Step4Future({ data, t, onNext, onBack }: Step4Props) {
       future_path: data.future_path || '',
       future_school: data.future_school || '',
       future_notes: data.future_notes || '',
+      future_company_name: data.future_company_name || '',
+      future_company_phone: data.future_company_phone || '',
+      future_company_address: data.future_company_address || '',
+      future_job_title: data.future_job_title || '',
+      future_duration_from: data.future_duration_from || '',
+      future_duration_to: data.future_duration_to || '',
+      future_school_address: data.future_school_address || '',
+      future_school_class: data.future_school_class || '',
+      future_berufsfeld: data.future_berufsfeld || '',
+      future_measure_name: data.future_measure_name || '',
+      future_measure_org: data.future_measure_org || '',
+      future_measure_from: data.future_measure_from || '',
+      future_measure_to: data.future_measure_to || '',
     },
   });
 
@@ -85,17 +111,107 @@ export default function Step4Future({ data, t, onNext, onBack }: Step4Props) {
         <input type="hidden" {...register('future_path')} />
       </div>
 
-      {/* Show school name for A or C */}
-      {(selectedPath === 'A' || selectedPath === 'C') && (
-        <div className="form-group">
-          <label className="label" htmlFor="future_school">{t.futureSchool}</label>
-          <input
-            id="future_school"
-            type="text"
-            className="input"
-            {...register('future_school')}
-            placeholder="Name der Schule"
-          />
+      {/* A: Weiterführende Schule */}
+      {selectedPath === 'A' && (
+        <div className="space-y-4 bg-gray-50 rounded-xl p-4 border border-gray-200">
+          <h3 className="font-medium text-gray-700 text-sm">Angaben zur weiterführenden Schule</h3>
+          <div className="form-group">
+            <label className="label" htmlFor="future_school">Name der Schule</label>
+            <input id="future_school" type="text" className="input" {...register('future_school')} placeholder="z.B. Muster-Gymnasium" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_school_address">Anschrift der Schule</label>
+            <input id="future_school_address" type="text" className="input" {...register('future_school_address')} placeholder="Straße, PLZ, Ort" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_school_class">Aufgenommen in Klasse</label>
+            <input id="future_school_class" type="text" className="input" {...register('future_school_class')} placeholder="z.B. 5a" />
+          </div>
+        </div>
+      )}
+
+      {/* B: Berufsausbildung / Betrieb */}
+      {selectedPath === 'B' && (
+        <div className="space-y-4 bg-gray-50 rounded-xl p-4 border border-gray-200">
+          <h3 className="font-medium text-gray-700 text-sm">Angaben zum Ausbildungsbetrieb</h3>
+          <div className="form-group">
+            <label className="label" htmlFor="future_company_name">Name des Betriebs</label>
+            <input id="future_company_name" type="text" className="input" {...register('future_company_name')} placeholder="Firmenname" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_company_address">Anschrift des Betriebs</label>
+            <input id="future_company_address" type="text" className="input" {...register('future_company_address')} placeholder="Straße, PLZ, Ort" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_company_phone">Telefon des Betriebs</label>
+            <input id="future_company_phone" type="tel" className="input" {...register('future_company_phone')} placeholder="+49 123 456789" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_job_title">Ausbildungsberuf</label>
+            <input id="future_job_title" type="text" className="input" {...register('future_job_title')} placeholder="z.B. Kaufmann/-frau für Büromanagement" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_berufsfeld">Berufsfeld</label>
+            <input id="future_berufsfeld" type="text" className="input" {...register('future_berufsfeld')} placeholder="z.B. Wirtschaft und Verwaltung" />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-group">
+              <label className="label" htmlFor="future_duration_from">Ausbildungsbeginn</label>
+              <input id="future_duration_from" type="date" className="input" {...register('future_duration_from')} />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="future_duration_to">Ausbildungsende</label>
+              <input id="future_duration_to" type="date" className="input" {...register('future_duration_to')} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* C: Weiterhin Schule (BVB/BVJ) */}
+      {selectedPath === 'C' && (
+        <div className="space-y-4 bg-gray-50 rounded-xl p-4 border border-gray-200">
+          <h3 className="font-medium text-gray-700 text-sm">Angaben zur Schule (BVB/BVJ)</h3>
+          <div className="form-group">
+            <label className="label" htmlFor="future_school">Name der Schule</label>
+            <input id="future_school" type="text" className="input" {...register('future_school')} placeholder="z.B. Berufskolleg Muster" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_school_address">Anschrift der Schule</label>
+            <input id="future_school_address" type="text" className="input" {...register('future_school_address')} placeholder="Straße, PLZ, Ort" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_school_class">Klasse / Bildungsgang</label>
+            <input id="future_school_class" type="text" className="input" {...register('future_school_class')} placeholder="z.B. BVJ, BVB" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_berufsfeld">Berufsfeld</label>
+            <input id="future_berufsfeld" type="text" className="input" {...register('future_berufsfeld')} placeholder="z.B. Wirtschaft und Verwaltung" />
+          </div>
+        </div>
+      )}
+
+      {/* D: Sonstige Maßnahme */}
+      {selectedPath === 'D' && (
+        <div className="space-y-4 bg-gray-50 rounded-xl p-4 border border-gray-200">
+          <h3 className="font-medium text-gray-700 text-sm">Angaben zur Maßnahme</h3>
+          <div className="form-group">
+            <label className="label" htmlFor="future_measure_name">Bezeichnung der Maßnahme</label>
+            <input id="future_measure_name" type="text" className="input" {...register('future_measure_name')} placeholder="z.B. Berufsvorbereitende Bildungsmaßnahme" />
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="future_measure_org">Maßnahmeträger</label>
+            <input id="future_measure_org" type="text" className="input" {...register('future_measure_org')} placeholder="Name der Organisation / des Trägers" />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-group">
+              <label className="label" htmlFor="future_measure_from">Beginn</label>
+              <input id="future_measure_from" type="date" className="input" {...register('future_measure_from')} />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="future_measure_to">Ende</label>
+              <input id="future_measure_to" type="date" className="input" {...register('future_measure_to')} />
+            </div>
+          </div>
         </div>
       )}
 

@@ -78,23 +78,56 @@ export async function generateDocument(caseRecord: any): Promise<DocumentResult>
     });
 
     const data = {
+      // Schüler persönliche Daten
       Nachname: caseRecord.last_name || '',
       Vorname: caseRecord.first_name || '',
       Geburtsdatum: formatDate(caseRecord.birth_date),
       Geburtsort: caseRecord.birth_place || '',
+      Geburtsland: caseRecord.birth_country || '',
       Geschlecht: mapGender(caseRecord.gender),
       Staatsangehörigkeit: caseRecord.nationality || '',
+      Zuzugsjahr: caseRecord.immigration_year || '',
+      Aussiedler: caseRecord.aussiedler || '',
+      Konfession: caseRecord.confession || '',
+      Muttersprache: caseRecord.mother_tongue || '',
+      // Erziehungsberechtigte
       Erziehungsberechtigter: caseRecord.guardian_name || '',
       Erzieher_Straße: caseRecord.guardian_street || '',
       Erzieher_Postleitzahl: caseRecord.guardian_zip || '',
       Erzieher_Ort: caseRecord.guardian_city || '',
       TelefonNr: caseRecord.phone || '',
       Email: caseRecord.email || '',
+      Notfalltelefon: caseRecord.emergency_phone || '',
+      Vater_Nachname: caseRecord.guardian_1_last_name || '',
+      Vater_Vorname: caseRecord.guardian_1_first_name || '',
+      Vater_Geburtsland: caseRecord.guardian_1_birth_country || '',
+      Mutter_Nachname: caseRecord.guardian_2_last_name || '',
+      Mutter_Vorname: caseRecord.guardian_2_first_name || '',
+      Mutter_Geburtsland: caseRecord.guardian_2_birth_country || '',
+      // Schullaufbahn
       Kindergarten: caseRecord.kindergarten || '',
       Einschulungsjahr: caseRecord.enrollment_year || '',
       Aufnahmedatum: formatDate(caseRecord.enrollment_date),
+      LetzteSchule_Typ: caseRecord.last_school_type || '',
+      LetzteSchule_Name: caseRecord.last_school_name || '',
+      Abschluss_Erwartet: caseRecord.graduation_expected || '',
+      Entlassung_Klasse: caseRecord.graduation_class || '',
+      // Künftige Tätigkeit
       KünftigeTätigkeit: mapFuturePath(caseRecord.future_path),
       ZukünftigeSchule: caseRecord.future_school || '',
+      Schule_Anschrift: caseRecord.future_school_address || '',
+      Schule_Klasse: caseRecord.future_school_class || '',
+      Betrieb_Name: caseRecord.future_company_name || '',
+      Betrieb_Anschrift: caseRecord.future_company_address || '',
+      Betrieb_Telefon: caseRecord.future_company_phone || '',
+      Ausbildungsberuf: caseRecord.future_job_title || '',
+      Berufsfeld: caseRecord.future_berufsfeld || '',
+      Ausbildung_Von: formatDate(caseRecord.future_duration_from),
+      Ausbildung_Bis: formatDate(caseRecord.future_duration_to),
+      Massnahme_Bezeichnung: caseRecord.future_measure_name || '',
+      Massnahme_Traeger: caseRecord.future_measure_org || '',
+      Massnahme_Von: formatDate(caseRecord.future_measure_from),
+      Massnahme_Bis: formatDate(caseRecord.future_measure_to),
       Bemerkungen: caseRecord.future_notes || '',
       Erstellungsdatum: formatDate(new Date().toISOString()),
     };
@@ -132,8 +165,13 @@ Schüler/in:
   Vorname: ${caseRecord.first_name || ''}
   Geburtsdatum: ${formatDate(caseRecord.birth_date)}
   Geburtsort: ${caseRecord.birth_place || ''}
+  Geburtsland: ${caseRecord.birth_country || ''}
   Geschlecht: ${mapGender(caseRecord.gender)}
   Staatsangehörigkeit: ${caseRecord.nationality || ''}
+  Jahr des Zuzugs: ${caseRecord.immigration_year || ''}
+  Aussiedler: ${caseRecord.aussiedler || ''}
+  Konfession: ${caseRecord.confession || ''}
+  Muttersprache: ${caseRecord.mother_tongue || ''}
 
 Erziehungsberechtigte/r:
   Name: ${caseRecord.guardian_name || ''}
@@ -142,14 +180,31 @@ Erziehungsberechtigte/r:
   Ort: ${caseRecord.guardian_city || ''}
   Telefon: ${caseRecord.phone || ''}
   E-Mail: ${caseRecord.email || ''}
+  Notfalltelefon: ${caseRecord.emergency_phone || ''}
+
+Vater: ${caseRecord.guardian_1_last_name || ''}, ${caseRecord.guardian_1_first_name || ''} (Geburtsland: ${caseRecord.guardian_1_birth_country || ''})
+Mutter: ${caseRecord.guardian_2_last_name || ''}, ${caseRecord.guardian_2_first_name || ''} (Geburtsland: ${caseRecord.guardian_2_birth_country || ''})
 
 Schullaufbahn:
   Kindergarten/Kita: ${caseRecord.kindergarten || ''}
   Einschulungsjahr: ${caseRecord.enrollment_year || ''}
   Aufnahmedatum: ${formatDate(caseRecord.enrollment_date)}
+  Zuletzt besuchte Schule: ${caseRecord.last_school_type || ''} - ${caseRecord.last_school_name || ''}
+  Erwarteter Abschluss: ${caseRecord.graduation_expected || ''}
+  Entlassung aus Klasse: ${caseRecord.graduation_class || ''}
 
 Künftige Tätigkeit: ${mapFuturePath(caseRecord.future_path)}
   Schule: ${caseRecord.future_school || ''}
+  Schule Anschrift: ${caseRecord.future_school_address || ''}
+  Klasse: ${caseRecord.future_school_class || ''}
+  Betrieb: ${caseRecord.future_company_name || ''}
+  Betrieb Anschrift: ${caseRecord.future_company_address || ''}
+  Betrieb Telefon: ${caseRecord.future_company_phone || ''}
+  Ausbildungsberuf: ${caseRecord.future_job_title || ''}
+  Berufsfeld: ${caseRecord.future_berufsfeld || ''}
+  Ausbildung von/bis: ${formatDate(caseRecord.future_duration_from)} - ${formatDate(caseRecord.future_duration_to)}
+  Maßnahme: ${caseRecord.future_measure_name || ''} (${caseRecord.future_measure_org || ''})
+  Maßnahme von/bis: ${formatDate(caseRecord.future_measure_from)} - ${formatDate(caseRecord.future_measure_to)}
   Bemerkungen: ${caseRecord.future_notes || ''}
 
 Erstellt am: ${formatDate(new Date().toISOString())}

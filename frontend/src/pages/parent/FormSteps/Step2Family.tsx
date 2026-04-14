@@ -12,6 +12,13 @@ const schema = z.object({
   guardian_city: z.string().min(1, 'Pflichtfeld'),
   phone: z.string().min(1, 'Pflichtfeld'),
   email: z.string().email('Ungültige E-Mail-Adresse').optional().or(z.literal('')),
+  emergency_phone: z.string().optional(),
+  guardian_1_last_name: z.string().optional(),
+  guardian_1_first_name: z.string().optional(),
+  guardian_1_birth_country: z.string().optional(),
+  guardian_2_last_name: z.string().optional(),
+  guardian_2_first_name: z.string().optional(),
+  guardian_2_birth_country: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -37,6 +44,13 @@ export default function Step2Family({ data, t, onNext, onBack }: Step2Props) {
       guardian_city: data.guardian_city || '',
       phone: data.phone || '',
       email: data.email || '',
+      emergency_phone: data.emergency_phone || '',
+      guardian_1_last_name: data.guardian_1_last_name || '',
+      guardian_1_first_name: data.guardian_1_first_name || '',
+      guardian_1_birth_country: data.guardian_1_birth_country || '',
+      guardian_2_last_name: data.guardian_2_last_name || '',
+      guardian_2_first_name: data.guardian_2_first_name || '',
+      guardian_2_birth_country: data.guardian_2_birth_country || '',
     },
   });
 
@@ -114,28 +128,73 @@ export default function Step2Family({ data, t, onNext, onBack }: Step2Props) {
           <label className="label" htmlFor="phone">
             {t.phone} <span className="text-red-500">*</span>
           </label>
-          <input
-            id="phone"
-            type="tel"
-            className={`input ${errors.phone ? 'input-error' : ''}`}
-            {...register('phone')}
-            placeholder="+49 123 456789"
-          />
+          <input id="phone" type="tel" className={`input ${errors.phone ? 'input-error' : ''}`}
+            {...register('phone')} placeholder="+49 123 456789" />
           {errors.phone && <p className="error-msg">{errors.phone.message}</p>}
         </div>
-
         <div className="form-group">
           <label className="label" htmlFor="email">{t.email}</label>
-          <input
-            id="email"
-            type="email"
-            className={`input ${errors.email ? 'input-error' : ''}`}
-            {...register('email')}
-            placeholder="beispiel@email.de"
-          />
+          <input id="email" type="email" className={`input ${errors.email ? 'input-error' : ''}`}
+            {...register('email')} placeholder="beispiel@email.de" />
           {errors.email && <p className="error-msg">{errors.email.message}</p>}
         </div>
       </div>
+
+      {/* Emergency contact */}
+      <div className="form-group">
+        <label className="label" htmlFor="emergency_phone">Im Notfall verständigen (Telefon)</label>
+        <input id="emergency_phone" type="tel" className="input"
+          {...register('emergency_phone')} placeholder="+49 123 456789" />
+      </div>
+
+      {/* Parents section */}
+      <div className="space-y-4">
+        <h3 className="font-medium text-gray-700 text-sm border-b border-gray-100 pb-2">Erziehungsberechtigte</h3>
+
+        {/* Vater */}
+        <div>
+          <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Vater</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_1_last_name">Nachname</label>
+              <input id="guardian_1_last_name" type="text" className="input"
+                {...register('guardian_1_last_name')} autoCapitalize="words" />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_1_first_name">Vorname</label>
+              <input id="guardian_1_first_name" type="text" className="input"
+                {...register('guardian_1_first_name')} autoCapitalize="words" />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_1_birth_country">Geburtsland</label>
+              <input id="guardian_1_birth_country" type="text" className="input"
+                {...register('guardian_1_birth_country')} placeholder="z.B. Deutschland" />
+            </div>
+          </div>
+        </div>
+
+        {/* Mutter */}
+        <div>
+          <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Mutter</p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_2_last_name">Nachname</label>
+              <input id="guardian_2_last_name" type="text" className="input"
+                {...register('guardian_2_last_name')} autoCapitalize="words" />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_2_first_name">Vorname</label>
+              <input id="guardian_2_first_name" type="text" className="input"
+                {...register('guardian_2_first_name')} autoCapitalize="words" />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_2_birth_country">Geburtsland</label>
+              <input id="guardian_2_birth_country" type="text" className="input"
+                {...register('guardian_2_birth_country')} placeholder="z.B. Deutschland" />
+            </div>
+          </div>
+        </div>
+      </div>>
 
       <div className="pt-4 flex justify-between">
         <button type="button" onClick={onBack} className="btn-secondary px-6">

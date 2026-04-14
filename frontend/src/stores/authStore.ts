@@ -32,24 +32,57 @@ export const useAuthStore = create<AuthState>()(
 export interface CaseData {
   id?: number;
   status?: string;
+  // Step 1 - Personal
   last_name?: string;
   first_name?: string;
   birth_date?: string;
   birth_place?: string;
+  birth_country?: string;
   gender?: string;
   nationality?: string;
+  immigration_year?: string;
+  confession?: string;
+  mother_tongue?: string;
+  aussiedler?: string;
+  // Step 2 - Family & Contact
   guardian_name?: string;
   guardian_street?: string;
   guardian_zip?: string;
   guardian_city?: string;
   phone?: string;
   email?: string;
+  emergency_phone?: string;
+  guardian_1_last_name?: string;
+  guardian_1_first_name?: string;
+  guardian_1_birth_country?: string;
+  guardian_2_last_name?: string;
+  guardian_2_first_name?: string;
+  guardian_2_birth_country?: string;
+  // Step 3 - School history
   kindergarten?: string;
   enrollment_year?: string;
   enrollment_date?: string;
+  last_school_type?: string;
+  last_school_name?: string;
+  graduation_expected?: string;
+  graduation_class?: string;
+  // Step 4 - Future
   future_path?: string;
   future_school?: string;
   future_notes?: string;
+  future_company_name?: string;
+  future_company_phone?: string;
+  future_company_address?: string;
+  future_job_title?: string;
+  future_duration_from?: string;
+  future_duration_to?: string;
+  future_school_address?: string;
+  future_school_class?: string;
+  future_berufsfeld?: string;
+  future_measure_name?: string;
+  future_measure_org?: string;
+  future_measure_from?: string;
+  future_measure_to?: string;
   language?: string;
   updated_at?: string;
   submitted_at?: string;

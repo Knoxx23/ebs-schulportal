@@ -13,8 +13,13 @@ const schema = z.object({
   first_name: z.string().min(1, 'Pflichtfeld'),
   birth_date: z.string().min(1, 'Pflichtfeld'),
   birth_place: z.string().min(1, 'Pflichtfeld'),
+  birth_country: z.string().optional(),
   gender: z.string().min(1, 'Pflichtfeld'),
   nationality: z.string().optional(),
+  immigration_year: z.string().optional(),
+  aussiedler: z.string().optional(),
+  confession: z.string().optional(),
+  mother_tongue: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -38,8 +43,13 @@ export default function Step1Person({ data, t, onNext }: Step1Props) {
       first_name: data.first_name || '',
       birth_date: data.birth_date || '',
       birth_place: data.birth_place || '',
+      birth_country: data.birth_country || '',
       gender: data.gender || '',
       nationality: data.nationality || '',
+      immigration_year: data.immigration_year || '',
+      aussiedler: data.aussiedler || '',
+      confession: data.confession || '',
+      mother_tongue: data.mother_tongue || '',
     },
   });
 
@@ -158,6 +168,44 @@ export default function Step1Person({ data, t, onNext }: Step1Props) {
             {...register('nationality')}
             placeholder="z.B. deutsch"
           />
+        </div>
+      </div>
+
+      {/* Birth country */}
+      <div className="form-group">
+        <label className="label" htmlFor="birth_country">Geburtsland</label>
+        <input id="birth_country" type="text" className="input"
+          {...register('birth_country')} placeholder="z.B. Deutschland" />
+      </div>
+
+      {/* Immigration year & Aussiedler */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="form-group">
+          <label className="label" htmlFor="immigration_year">Jahr des Zuzugs</label>
+          <input id="immigration_year" type="text" className="input"
+            {...register('immigration_year')} placeholder="z.B. 2018" maxLength={4} />
+        </div>
+        <div className="form-group">
+          <label className="label" htmlFor="aussiedler">Aussiedler</label>
+          <select id="aussiedler" className="input" {...register('aussiedler')}>
+            <option value="">— Bitte wählen —</option>
+            <option value="ja">Ja</option>
+            <option value="nein">Nein</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Confession & Mother tongue */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        <div className="form-group">
+          <label className="label" htmlFor="confession">Konfession / Religion</label>
+          <input id="confession" type="text" className="input"
+            {...register('confession')} placeholder="z.B. evangelisch, islamisch" />
+        </div>
+        <div className="form-group">
+          <label className="label" htmlFor="mother_tongue">Muttersprache / Verkehrssprache</label>
+          <input id="mother_tongue" type="text" className="input"
+            {...register('mother_tongue')} placeholder="z.B. Deutsch, Türkisch" />
         </div>
       </div>
 
