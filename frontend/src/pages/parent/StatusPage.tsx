@@ -37,7 +37,7 @@ export default function StatusPage() {
   async function handleExportData() {
     try {
       setExporting(true);
-      const response = await fetch('/api/parent/case/export');
+      const response = await fetch('/api/parent/case/export', { credentials: 'include' });
       if (!response.ok) {
         throw new Error('Export fehlgeschlagen');
       }
