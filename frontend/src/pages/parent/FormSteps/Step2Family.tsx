@@ -142,55 +142,55 @@ export default function Step2Family({ data, t, onNext, onBack }: Step2Props) {
 
       {/* Emergency contact */}
       <div className="form-group">
-        <label className="label" htmlFor="emergency_phone">Im Notfall verständigen (Telefon)</label>
+        <label className="label" htmlFor="emergency_phone">{t.emergencyPhone}</label>
         <input id="emergency_phone" type="tel" className="input"
-          {...register('emergency_phone')} placeholder="+49 123 456789" />
+          {...register('emergency_phone')} placeholder={t.placeholderPhone} />
       </div>
 
       {/* Parents section */}
       <div className="space-y-4">
-        <h3 className="font-medium text-gray-700 text-sm border-b border-gray-100 pb-2">Erziehungsberechtigte</h3>
+        <h3 className="font-medium text-gray-700 text-sm border-b border-gray-100 pb-2">{t.guardian}</h3>
 
         {/* Vater */}
         <div>
-          <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Vater</p>
+          <p className="text-xs font-semibold text-gray-500 uppercase mb-2">{t.guardianFatherName}</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="form-group">
-              <label className="label" htmlFor="guardian_1_last_name">Nachname</label>
+              <label className="label" htmlFor="guardian_1_last_name">{t.lastName}</label>
               <input id="guardian_1_last_name" type="text" className="input"
                 {...register('guardian_1_last_name')} autoCapitalize="words" />
             </div>
             <div className="form-group">
-              <label className="label" htmlFor="guardian_1_first_name">Vorname</label>
+              <label className="label" htmlFor="guardian_1_first_name">{t.firstName}</label>
               <input id="guardian_1_first_name" type="text" className="input"
                 {...register('guardian_1_first_name')} autoCapitalize="words" />
             </div>
             <div className="form-group">
-              <label className="label" htmlFor="guardian_1_birth_country">Geburtsland</label>
+              <label className="label" htmlFor="guardian_1_birth_country">{t.guardianFatherBirthCountry}</label>
               <input id="guardian_1_birth_country" type="text" className="input"
-                {...register('guardian_1_birth_country')} placeholder="z.B. Deutschland" />
+                {...register('guardian_1_birth_country')} placeholder={t.placeholderCountry} />
             </div>
           </div>
         </div>
 
         {/* Mutter */}
         <div>
-          <p className="text-xs font-semibold text-gray-500 uppercase mb-2">Mutter</p>
+          <p className="text-xs font-semibold text-gray-500 uppercase mb-2">{t.guardianMotherName}</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="form-group">
-              <label className="label" htmlFor="guardian_2_last_name">Nachname</label>
+              <label className="label" htmlFor="guardian_2_last_name">{t.lastName}</label>
               <input id="guardian_2_last_name" type="text" className="input"
                 {...register('guardian_2_last_name')} autoCapitalize="words" />
             </div>
             <div className="form-group">
-              <label className="label" htmlFor="guardian_2_first_name">Vorname</label>
+              <label className="label" htmlFor="guardian_2_first_name">{t.firstName}</label>
               <input id="guardian_2_first_name" type="text" className="input"
                 {...register('guardian_2_first_name')} autoCapitalize="words" />
             </div>
             <div className="form-group">
-              <label className="label" htmlFor="guardian_2_birth_country">Geburtsland</label>
+              <label className="label" htmlFor="guardian_2_birth_country">{t.guardianMotherBirthCountry}</label>
               <input id="guardian_2_birth_country" type="text" className="input"
-                {...register('guardian_2_birth_country')} placeholder="z.B. Deutschland" />
+                {...register('guardian_2_birth_country')} placeholder={t.placeholderCountry} />
             </div>
           </div>
         </div>

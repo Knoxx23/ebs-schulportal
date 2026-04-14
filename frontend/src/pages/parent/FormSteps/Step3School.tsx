@@ -88,32 +88,32 @@ export default function Step3School({ data, t, onNext, onBack }: Step3Props) {
 
       {/* Last school */}
       <div className="space-y-4">
-        <h3 className="font-medium text-gray-700 text-sm border-b border-gray-100 pb-2">Zuletzt besuchte Schule</h3>
+        <h3 className="font-medium text-gray-700 text-sm border-b border-gray-100 pb-2">{t.lastSchoolType}</h3>
         <div className="form-group">
-          <label className="label" htmlFor="last_school_type">Schultyp</label>
+          <label className="label" htmlFor="last_school_type">{t.lastSchoolType}</label>
           <select id="last_school_type" className="input" {...register('last_school_type')}>
-            <option value="">— Bitte wählen —</option>
-            <option value="HS">Hauptschule (HS)</option>
-            <option value="RS">Realschule (RS)</option>
-            <option value="GE">Gesamtschule (GE)</option>
-            <option value="GY">Gymnasium (GY)</option>
-            <option value="sonstige">Sonstige Schule</option>
+            <option value="">—</option>
+            <option value="HS">{t.schoolTypeHS}</option>
+            <option value="RS">{t.schoolTypeRS}</option>
+            <option value="GE">{t.schoolTypeGE}</option>
+            <option value="GY">{t.schoolTypeGY}</option>
+            <option value="sonstige">{t.schoolTypeSonstige}</option>
           </select>
         </div>
         <div className="form-group">
-          <label className="label" htmlFor="last_school_name">Name / Anschrift der Schule</label>
+          <label className="label" htmlFor="last_school_name">{t.lastSchoolName}</label>
           <input id="last_school_name" type="text" className="input"
-            {...register('last_school_name')} placeholder="z.B. Muster-Gymnasium, Musterstraße 1, 12345 Stadt" />
+            {...register('last_school_name')} placeholder={t.placeholderSchoolName} />
         </div>
       </div>
 
       {/* Graduation */}
       <div className="space-y-4">
-        <h3 className="font-medium text-gray-700 text-sm border-b border-gray-100 pb-2">Schulabschluss</h3>
+        <h3 className="font-medium text-gray-700 text-sm border-b border-gray-100 pb-2">{t.graduationExpected}</h3>
         <div className="form-group">
-          <label className="label" htmlFor="graduation_expected">Erwarteter Abschluss</label>
+          <label className="label" htmlFor="graduation_expected">{t.graduationExpected}</label>
           <select id="graduation_expected" className="input" {...register('graduation_expected')}>
-            <option value="">— Bitte wählen —</option>
+            <option value="">—</option>
             <option value="ohne">Ohne Abschluss</option>
             <option value="foerder_l">Förderschule L</option>
             <option value="hs_kl9">Hauptschulabschluss Kl. 9</option>
@@ -124,7 +124,7 @@ export default function Step3School({ data, t, onNext, onBack }: Step3Props) {
           </select>
         </div>
         <div className="form-group">
-          <label className="label" htmlFor="graduation_class">Entlassung aus Klasse</label>
+          <label className="label" htmlFor="graduation_class">{t.graduationClass}</label>
           <select id="graduation_class" className="input" {...register('graduation_class')}>
             <option value="">— Bitte wählen —</option>
             {['7','8','9','10','11','12','13'].map(c => (

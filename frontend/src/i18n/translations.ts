@@ -94,6 +94,45 @@ export interface Translation {
   invalidDate: string;
   invalidZip: string;
   minLength: string;
+  // Step 1 - New fields
+  birthCountry: string;
+  immigrationYear: string;
+  aussiedler: string;
+  aussiedlerYes: string;
+  aussiedlerNo: string;
+  confession: string;
+  motherTongue: string;
+  // Step 2 - New fields
+  emergencyPhone: string;
+  guardianFatherName: string;
+  guardianMotherName: string;
+  guardianFatherBirthCountry: string;
+  guardianMotherBirthCountry: string;
+  // Step 3 - New fields
+  lastSchoolType: string;
+  lastSchoolTypePlaceholder: string;
+  lastSchoolName: string;
+  graduationExpected: string;
+  graduationClass: string;
+  schoolTypeHS: string;
+  schoolTypeRS: string;
+  schoolTypeGE: string;
+  schoolTypeGY: string;
+  schoolTypeSonstige: string;
+  // Step 4 - New detail fields
+  futureCompanyName: string;
+  futureTrainingJob: string;
+  futureTrainingStart: string;
+  futureSchoolName: string;
+  futureSchoolType: string;
+  futureMeasureCarrier: string;
+  futureMeasureType: string;
+  futureOtherDescription: string;
+  // Placeholders
+  placeholderCountry: string;
+  placeholderYear: string;
+  placeholderPhone: string;
+  placeholderSchoolName: string;
 }
 
 const de: Translation = {
@@ -167,6 +206,41 @@ const de: Translation = {
   invalidDate: 'Bitte geben Sie ein gültiges Datum ein',
   invalidZip: 'Bitte geben Sie eine gültige Postleitzahl ein',
   minLength: 'Mindestlänge nicht erreicht',
+
+  birthCountry: 'Geburtsland',
+  immigrationYear: 'Jahr des Zuzugs',
+  aussiedler: 'Aussiedler',
+  aussiedlerYes: 'Ja',
+  aussiedlerNo: 'Nein',
+  confession: 'Konfession / Religion',
+  motherTongue: 'Muttersprache / Verkehrssprache in der Familie',
+  emergencyPhone: 'Notfall-Telefonnummer',
+  guardianFatherName: 'Name des Vaters / Erziehungsberechtigten (männlich)',
+  guardianMotherName: 'Name der Mutter / Erziehungsberechtigten (weiblich)',
+  guardianFatherBirthCountry: 'Geburtsland Vater',
+  guardianMotherBirthCountry: 'Geburtsland Mutter',
+  lastSchoolType: 'Zuletzt besuchte Schulform',
+  lastSchoolTypePlaceholder: 'z.B. Hauptschule, Realschule, Gymnasium',
+  lastSchoolName: 'Name und Anschrift der zuletzt besuchten Schule',
+  graduationExpected: 'Voraussichtlicher Schulabschluss',
+  graduationClass: 'Entlassung aus Klasse',
+  schoolTypeHS: 'Hauptschule',
+  schoolTypeRS: 'Realschule',
+  schoolTypeGE: 'Gesamtschule',
+  schoolTypeGY: 'Gymnasium',
+  schoolTypeSonstige: 'Sonstige',
+  futureCompanyName: 'Name und Anschrift des Betriebs',
+  futureTrainingJob: 'Ausbildungsberuf',
+  futureTrainingStart: 'Beginn der Ausbildung',
+  futureSchoolName: 'Name und Anschrift der Schule',
+  futureSchoolType: 'Schulform',
+  futureMeasureCarrier: 'Name und Anschrift des Maßnahmeträgers',
+  futureMeasureType: 'Art der Maßnahme',
+  futureOtherDescription: 'Sonstige Beschreibung',
+  placeholderCountry: 'z.B. Deutschland',
+  placeholderYear: 'z.B. 2018',
+  placeholderPhone: '+49 123 456789',
+  placeholderSchoolName: 'z.B. Muster-Schule, Musterstraße 1, 12345 Musterstadt',
 };
 
 const en: Translation = {
@@ -240,6 +314,41 @@ const en: Translation = {
   invalidDate: 'Please enter a valid date',
   invalidZip: 'Please enter a valid postal code',
   minLength: 'Minimum length not reached',
+
+  birthCountry: 'Country of Birth',
+  immigrationYear: 'Year of Immigration',
+  aussiedler: 'Resettler',
+  aussiedlerYes: 'Yes',
+  aussiedlerNo: 'No',
+  confession: 'Denomination / Religion',
+  motherTongue: 'Mother Tongue / Family Language',
+  emergencyPhone: 'Emergency Phone Number',
+  guardianFatherName: 'Name of Father / Male Guardian',
+  guardianMotherName: 'Name of Mother / Female Guardian',
+  guardianFatherBirthCountry: 'Father\'s Country of Birth',
+  guardianMotherBirthCountry: 'Mother\'s Country of Birth',
+  lastSchoolType: 'Last Attended School Type',
+  lastSchoolTypePlaceholder: 'e.g. Hauptschule, Realschule, Gymnasium',
+  lastSchoolName: 'Name and Address of Last Attended School',
+  graduationExpected: 'Expected School Leaving Certificate',
+  graduationClass: 'Leaving Class',
+  schoolTypeHS: 'Hauptschule',
+  schoolTypeRS: 'Realschule',
+  schoolTypeGE: 'Comprehensive School',
+  schoolTypeGY: 'Gymnasium',
+  schoolTypeSonstige: 'Other',
+  futureCompanyName: 'Name and Address of Company',
+  futureTrainingJob: 'Training Occupation',
+  futureTrainingStart: 'Start of Training',
+  futureSchoolName: 'Name and Address of School',
+  futureSchoolType: 'School Type',
+  futureMeasureCarrier: 'Name and Address of Measure Provider',
+  futureMeasureType: 'Type of Measure',
+  futureOtherDescription: 'Other Description',
+  placeholderCountry: 'e.g. Germany',
+  placeholderYear: 'e.g. 2018',
+  placeholderPhone: '+49 123 456789',
+  placeholderSchoolName: 'e.g. Sample School, Sample Street 1, 12345 Sample City',
 };
 
 const tr: Translation = {
@@ -313,6 +422,41 @@ const tr: Translation = {
   invalidDate: 'Lütfen geçerli bir tarih girin',
   invalidZip: 'Lütfen geçerli bir posta kodu girin',
   minLength: 'Minimum uzunluğa ulaşılmadı',
+
+  birthCountry: 'Doğum ülkesi',
+  immigrationYear: 'Göç yılı',
+  aussiedler: 'Göçmen',
+  aussiedlerYes: 'Evet',
+  aussiedlerNo: 'Hayır',
+  confession: 'Mezhep / Din',
+  motherTongue: 'Anadil / Ailede kullanılan dil',
+  emergencyPhone: 'Acil durum telefon numarası',
+  guardianFatherName: 'Baba / Vasi adı (erkek)',
+  guardianMotherName: 'Anne / Vasi adı (kadın)',
+  guardianFatherBirthCountry: 'Babanın doğum ülkesi',
+  guardianMotherBirthCountry: 'Annenin doğum ülkesi',
+  lastSchoolType: 'Son ziyaret edilen okul türü',
+  lastSchoolTypePlaceholder: 'örn. Hauptschule, Realschule, Gymnasium',
+  lastSchoolName: 'Son ziyaret edilen okulun adı ve adresi',
+  graduationExpected: 'Beklenen okul mezuniyeti',
+  graduationClass: 'Sınıftan mezuniyet',
+  schoolTypeHS: 'Hauptschule',
+  schoolTypeRS: 'Realschule',
+  schoolTypeGE: 'Gesamtschule',
+  schoolTypeGY: 'Gymnasium',
+  schoolTypeSonstige: 'Diğer',
+  futureCompanyName: 'İşletmenin adı ve adresi',
+  futureTrainingJob: 'Eğitim mesleği',
+  futureTrainingStart: 'Eğitimin başlangıcı',
+  futureSchoolName: 'Okulun adı ve adresi',
+  futureSchoolType: 'Okul türü',
+  futureMeasureCarrier: 'Ölçüm sağlayıcısının adı ve adresi',
+  futureMeasureType: 'Ölçüm türü',
+  futureOtherDescription: 'Diğer açıklama',
+  placeholderCountry: 'örn. Almanya',
+  placeholderYear: 'örn. 2018',
+  placeholderPhone: '+49 123 456789',
+  placeholderSchoolName: 'örn. Muster-Schule, Musterstraße 1, 12345 Musterstadt',
 };
 
 const ar: Translation = {
@@ -386,6 +530,41 @@ const ar: Translation = {
   invalidDate: 'يرجى إدخال تاريخ صالح',
   invalidZip: 'يرجى إدخال رمز بريدي صالح',
   minLength: 'لم يتم بلوغ الحد الأدنى للطول',
+
+  birthCountry: 'بلد الميلاد',
+  immigrationYear: 'سنة الهجرة',
+  aussiedler: 'مهاجر عائد',
+  aussiedlerYes: 'نعم',
+  aussiedlerNo: 'لا',
+  confession: 'الطائفة / الدين',
+  motherTongue: 'اللغة الأم / لغة التواصل في العائلة',
+  emergencyPhone: 'رقم هاتف الطوارئ',
+  guardianFatherName: 'اسم الأب / الوصي (ذكر)',
+  guardianMotherName: 'اسم الأم / الوصي (أنثى)',
+  guardianFatherBirthCountry: 'بلد ميلاد الأب',
+  guardianMotherBirthCountry: 'بلد ميلاد الأم',
+  lastSchoolType: 'نوع المدرسة التي تم الالتحاق بها آخر مرة',
+  lastSchoolTypePlaceholder: 'مثلاً المدرسة الأساسية، المدرسة الثانوية، المدرسة الإعدادية',
+  lastSchoolName: 'اسم وعنوان المدرسة التي تم الالتحاق بها آخر مرة',
+  graduationExpected: 'التخرج المتوقع',
+  graduationClass: 'التخرج من الصف',
+  schoolTypeHS: 'المدرسة الأساسية',
+  schoolTypeRS: 'المدرسة الثانوية',
+  schoolTypeGE: 'المدرسة الشاملة',
+  schoolTypeGY: 'المدرسة الإعدادية',
+  schoolTypeSonstige: 'أخرى',
+  futureCompanyName: 'اسم وعنوان المؤسسة',
+  futureTrainingJob: 'مهنة التدريب',
+  futureTrainingStart: 'بداية التدريب',
+  futureSchoolName: 'اسم وعنوان المدرسة',
+  futureSchoolType: 'نوع المدرسة',
+  futureMeasureCarrier: 'اسم وعنوان الجهة المنفذة للإجراء',
+  futureMeasureType: 'نوع الإجراء',
+  futureOtherDescription: 'وصف آخر',
+  placeholderCountry: 'مثلاً ألمانيا',
+  placeholderYear: 'مثلاً 2018',
+  placeholderPhone: '+49 123 456789',
+  placeholderSchoolName: 'مثلاً مدرسة نموذجية، شارع النموذج 1، 12345 مدينة النموذج',
 };
 
 const ua: Translation = {
@@ -459,6 +638,41 @@ const ua: Translation = {
   invalidDate: 'Будь ласка, введіть дійсну дату',
   invalidZip: 'Будь ласка, введіть дійсний поштовий індекс',
   minLength: 'Мінімальна довжина не досягнута',
+
+  birthCountry: 'Країна народження',
+  immigrationYear: 'Рік переїзду',
+  aussiedler: 'Репатріант',
+  aussiedlerYes: 'Так',
+  aussiedlerNo: 'Ні',
+  confession: 'Віросповідання / Релігія',
+  motherTongue: 'Рідна мова / Мова спілкування в сім’ї',
+  emergencyPhone: 'Телефон для екстрених випадків',
+  guardianFatherName: 'Ім’я батька / опікуна (чоловіче)',
+  guardianMotherName: 'Ім’я матері / опікуна (жіноче)',
+  guardianFatherBirthCountry: 'Країна народження батька',
+  guardianMotherBirthCountry: 'Країна народження матері',
+  lastSchoolType: 'Останній відвідуваний тип школи',
+  lastSchoolTypePlaceholder: 'напр. основна школа, реальна школа, гімназія',
+  lastSchoolName: 'Назва та адреса останньої відвідуваної школи',
+  graduationExpected: 'Очікуване закінчення школи',
+  graduationClass: 'Випуск з класу',
+  schoolTypeHS: 'Основна школа',
+  schoolTypeRS: 'Реальна школа',
+  schoolTypeGE: 'Загальна школа',
+  schoolTypeGY: 'Гімназія',
+  schoolTypeSonstige: 'Інше',
+  futureCompanyName: 'Назва та адреса підприємства',
+  futureTrainingJob: 'Професія навчання',
+  futureTrainingStart: 'Початок навчання',
+  futureSchoolName: 'Назва та адреса школи',
+  futureSchoolType: 'Тип школи',
+  futureMeasureCarrier: 'Назва та адреса організатора заходу',
+  futureMeasureType: 'Тип заходу',
+  futureOtherDescription: 'Інший опис',
+  placeholderCountry: 'напр. Німеччина',
+  placeholderYear: 'напр. 2018',
+  placeholderPhone: '+49 123 456789',
+  placeholderSchoolName: 'напр. Зразкова школа, Зразкова вулиця 1, 12345 Зразкове місто',
 };
 
 const ru: Translation = {
@@ -532,6 +746,41 @@ const ru: Translation = {
   invalidDate: 'Пожалуйста, введите действительную дату',
   invalidZip: 'Пожалуйста, введите действительный почтовый индекс',
   minLength: 'Минимальная длина не достигнута',
+
+  birthCountry: 'Страна рождения',
+  immigrationYear: 'Год иммиграции',
+  aussiedler: 'Переселенец',
+  aussiedlerYes: 'Да',
+  aussiedlerNo: 'Нет',
+  confession: 'Конфессия / религия',
+  motherTongue: 'Родной язык / язык общения в семье',
+  emergencyPhone: 'Телефон экстренной связи',
+  guardianFatherName: 'Имя отца / законного представителя (мужчина)',
+  guardianMotherName: 'Имя матери / законного представителя (женщина)',
+  guardianFatherBirthCountry: 'Страна рождения отца',
+  guardianMotherBirthCountry: 'Страна рождения матери',
+  lastSchoolType: 'Последний посещаемый тип школы',
+  lastSchoolTypePlaceholder: 'напр. Hauptschule, Realschule, Gymnasium',
+  lastSchoolName: 'Название и адрес последней посещаемой школы',
+  graduationExpected: 'Ожидаемый школьный выпуск',
+  graduationClass: 'Выпуск из класса',
+  schoolTypeHS: 'Hauptschule',
+  schoolTypeRS: 'Realschule',
+  schoolTypeGE: 'Gesamtschule',
+  schoolTypeGY: 'Гимназия',
+  schoolTypeSonstige: 'Другое',
+  futureCompanyName: 'Название и адрес предприятия',
+  futureTrainingJob: 'Профессия по обучению',
+  futureTrainingStart: 'Начало обучения',
+  futureSchoolName: 'Название и адрес школы',
+  futureSchoolType: 'Тип школы',
+  futureMeasureCarrier: 'Название и адрес организатора мероприятия',
+  futureMeasureType: 'Вид мероприятия',
+  futureOtherDescription: 'Другое описание',
+  placeholderCountry: 'напр. Германия',
+  placeholderYear: 'напр. 2018',
+  placeholderPhone: '+49 123 456789',
+  placeholderSchoolName: 'напр. Muster-Schule, Musterstraße 1, 12345 Musterstadt',
 };
 
 const pl: Translation = {
@@ -605,6 +854,41 @@ const pl: Translation = {
   invalidDate: 'Proszę wpisać prawidłową datę',
   invalidZip: 'Proszę wpisać prawidłowy kod pocztowy',
   minLength: 'Minimalna długość nie osiągnięta',
+
+  birthCountry: 'Kraj urodzenia',
+  immigrationYear: 'Rok przyjazdu',
+  aussiedler: 'Osoba powracająca z emigracji',
+  aussiedlerYes: 'Tak',
+  aussiedlerNo: 'Nie',
+  confession: 'Wyznanie / Religia',
+  motherTongue: 'Język ojczysty / Język używany w rodzinie',
+  emergencyPhone: 'Numer telefonu alarmowego',
+  guardianFatherName: 'Imię i nazwisko ojca / opiekuna prawnego (mężczyzna)',
+  guardianMotherName: 'Imię i nazwisko matki / opiekuna prawnego (kobieta)',
+  guardianFatherBirthCountry: 'Kraj urodzenia ojca',
+  guardianMotherBirthCountry: 'Kraj urodzenia matki',
+  lastSchoolType: 'Ostatni typ szkoły',
+  lastSchoolTypePlaceholder: 'np. szkoła podstawowa, szkoła średnia, liceum',
+  lastSchoolName: 'Nazwa i adres ostatnio uczęszczanej szkoły',
+  graduationExpected: 'Przewidywane ukończenie szkoły',
+  graduationClass: 'Zakończenie klasy',
+  schoolTypeHS: 'Szkoła podstawowa',
+  schoolTypeRS: 'Szkoła średnia',
+  schoolTypeGE: 'Szkoła ogólnokształcąca',
+  schoolTypeGY: 'Liceum',
+  schoolTypeSonstige: 'Inne',
+  futureCompanyName: 'Nazwa i adres zakładu pracy',
+  futureTrainingJob: 'Zawód szkoleniowy',
+  futureTrainingStart: 'Początek szkolenia',
+  futureSchoolName: 'Nazwa i adres szkoły',
+  futureSchoolType: 'Typ szkoły',
+  futureMeasureCarrier: 'Nazwa i adres organizatora szkolenia',
+  futureMeasureType: 'Rodzaj szkolenia',
+  futureOtherDescription: 'Inny opis',
+  placeholderCountry: 'np. Niemcy',
+  placeholderYear: 'np. 2018',
+  placeholderPhone: '+49 123 456789',
+  placeholderSchoolName: 'np. Szkoła Wzorcowa, ul. Wzorcowa 1, 12345 Miasto Wzorcowe',
 };
 
 export const translations: Record<Language, Translation> = {

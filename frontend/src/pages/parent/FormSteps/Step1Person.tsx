@@ -173,24 +173,24 @@ export default function Step1Person({ data, t, onNext }: Step1Props) {
 
       {/* Birth country */}
       <div className="form-group">
-        <label className="label" htmlFor="birth_country">Geburtsland</label>
+        <label className="label" htmlFor="birth_country">{t.birthCountry}</label>
         <input id="birth_country" type="text" className="input"
-          {...register('birth_country')} placeholder="z.B. Deutschland" />
+          {...register('birth_country')} placeholder={t.placeholderCountry} />
       </div>
 
       {/* Immigration year & Aussiedler */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div className="form-group">
-          <label className="label" htmlFor="immigration_year">Jahr des Zuzugs</label>
+          <label className="label" htmlFor="immigration_year">{t.immigrationYear}</label>
           <input id="immigration_year" type="text" className="input"
-            {...register('immigration_year')} placeholder="z.B. 2018" maxLength={4} />
+            {...register('immigration_year')} placeholder={t.placeholderYear} maxLength={4} />
         </div>
         <div className="form-group">
-          <label className="label" htmlFor="aussiedler">Aussiedler</label>
+          <label className="label" htmlFor="aussiedler">{t.aussiedler}</label>
           <select id="aussiedler" className="input" {...register('aussiedler')}>
-            <option value="">— Bitte wählen —</option>
-            <option value="ja">Ja</option>
-            <option value="nein">Nein</option>
+            <option value="">—</option>
+            <option value="ja">{t.aussiedlerYes}</option>
+            <option value="nein">{t.aussiedlerNo}</option>
           </select>
         </div>
       </div>
@@ -198,14 +198,14 @@ export default function Step1Person({ data, t, onNext }: Step1Props) {
       {/* Confession & Mother tongue */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div className="form-group">
-          <label className="label" htmlFor="confession">Konfession / Religion</label>
+          <label className="label" htmlFor="confession">{t.confession}</label>
           <input id="confession" type="text" className="input"
-            {...register('confession')} placeholder="z.B. evangelisch, islamisch" />
+            {...register('confession')} placeholder="" />
         </div>
         <div className="form-group">
-          <label className="label" htmlFor="mother_tongue">Muttersprache / Verkehrssprache</label>
+          <label className="label" htmlFor="mother_tongue">{t.motherTongue}</label>
           <input id="mother_tongue" type="text" className="input"
-            {...register('mother_tongue')} placeholder="z.B. Deutsch, Türkisch" />
+            {...register('mother_tongue')} placeholder="" />
         </div>
       </div>
 
