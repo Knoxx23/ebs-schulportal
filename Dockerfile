@@ -33,6 +33,9 @@ COPY --from=backend-build /app/backend/dist ./dist
 # Copy frontend build
 COPY --from=frontend-build /app/frontend/dist ./frontend/dist
 
+# Install wget for healthcheck
+RUN apk add --no-cache wget
+
 # Create data directory for SQLite and documents
 RUN mkdir -p /app/data /app/data/documents
 
