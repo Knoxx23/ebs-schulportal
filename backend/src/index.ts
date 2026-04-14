@@ -122,18 +122,6 @@ app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// TEMPORARY: One-time admin password reset (REMOVE AFTER USE)
-app.get('/api/setup-admin-temp-xk9p2q', async (_req, res) => {
-  try {
-    const bcryptTemp = require('bcryptjs');
-    const hash = await bcryptTemp.hash('EBSAdmin2026!', 12);
-    db.prepare('UPDATE users SET password_hash=? WHERE role=?').run(hash, 'admin');
-    const user = db.prepare('SELECT email FROM users WHERE role=?').get('admin') as any;
-    res.json({ success: true, email: user?.email });
-  } catch (e: any) {
-    res.status(500).json({ error: e.message });
-  }
-});
 
 // Serve built frontend (production mode)
 // In Docker, frontend is at /app/frontend/dist; locally at ../../frontend/dist
