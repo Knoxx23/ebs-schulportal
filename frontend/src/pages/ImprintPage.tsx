@@ -33,14 +33,14 @@ export default function ImprintPage() {
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">Schulname</h3>
                 <p className="text-gray-700 bg-yellow-50 border border-yellow-200 p-3 rounded">
-                  <em>[bitte ausfüllen]</em>
+                  <em>Muster-Grundschule (Bitte im Code anpassen)</em>
                 </p>
               </div>
 
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">Anschrift</h3>
                 <p className="text-gray-700 bg-yellow-50 border border-yellow-200 p-3 rounded">
-                  <em>[bitte ausfüllen]</em>
+                  <em>Muster-Grundschule (Bitte im Code anpassen)</em>
                 </p>
               </div>
 
@@ -50,7 +50,7 @@ export default function ImprintPage() {
                   Vertreten durch die Schulleitung:
                 </p>
                 <p className="text-gray-700 bg-yellow-50 border border-yellow-200 p-3 rounded">
-                  <em>[bitte ausfüllen]</em>
+                  <em>Muster-Grundschule (Bitte im Code anpassen)</em>
                 </p>
               </div>
 
@@ -60,14 +60,14 @@ export default function ImprintPage() {
                   <strong>Telefon:</strong>
                   <br />
                   <span className="bg-yellow-50 border border-yellow-200 p-2 rounded inline-block mt-1">
-                    <em>[bitte ausfüllen]</em>
+                    <em>Muster-Grundschule (Bitte im Code anpassen)</em>
                   </span>
                 </p>
                 <p className="text-gray-700 mt-3">
                   <strong>Email:</strong>
                   <br />
                   <span className="bg-yellow-50 border border-yellow-200 p-2 rounded inline-block mt-1">
-                    <em>[bitte ausfüllen]</em>
+                    <em>Muster-Grundschule (Bitte im Code anpassen)</em>
                   </span>
                 </p>
               </div>
@@ -75,7 +75,7 @@ export default function ImprintPage() {
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-2">Aufsichtsbehörde</h3>
                 <p className="text-gray-700 bg-yellow-50 border border-yellow-200 p-3 rounded">
-                  <em>[bitte ausfüllen]</em>
+                  <em>Muster-Grundschule (Bitte im Code anpassen)</em>
                 </p>
               </div>
             </div>

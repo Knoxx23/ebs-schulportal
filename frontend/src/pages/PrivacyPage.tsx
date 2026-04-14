@@ -32,10 +32,10 @@ export default function PrivacyPage() {
               Verantwortlich für die Datenverarbeitung im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:
             </p>
             <div className="bg-gray-100 p-4 rounded-lg text-gray-700">
-              <p className="font-semibold mb-2">[Schulname]</p>
-              <p>[Adresse]</p>
-              <p>Email: [Email]</p>
-              <p className="mt-3"><strong>Datenschutzbeauftragter:</strong> [DSB-Kontakt]</p>
+              <p className="font-semibold mb-2">Muster-Grundschule (Bitte im Code anpassen)</p>
+              <p>Musterstraße 1, 12345 Musterstadt</p>
+              <p>Email: info@muster-grundschule.de</p>
+              <p className="mt-3"><strong>Datenschutzbeauftragter:</strong> datenschutz@muster-grundschule.de</p>
             </div>
           </section>
 
@@ -151,10 +151,10 @@ export default function PrivacyPage() {
               Zur Geltendmachung Ihrer Rechte oder bei Fragen zum Datenschutz kontaktieren Sie bitte:
             </p>
             <div className="bg-gray-100 p-4 rounded-lg text-gray-700">
-              <p className="font-semibold mb-2">[Schulname]</p>
-              <p>[Adresse]</p>
-              <p>Tel: [Telefon]</p>
-              <p>Email: [Email]</p>
+              <p className="font-semibold mb-2">Muster-Grundschule (Bitte im Code anpassen)</p>
+              <p>Musterstraße 1, 12345 Musterstadt</p>
+              <p>Tel: 01234 / 56789</p>
+              <p>Email: info@muster-grundschule.de</p>
             </div>
           </section>
 
