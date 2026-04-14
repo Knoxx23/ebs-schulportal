@@ -8,7 +8,7 @@ echo "=== EBS Schulportal Push-Script ==="
 echo ""
 
 TOKEN=""
-REPO_URL="https://github.com/Knoxx23/ebs-schulportal.git"
+REPO_URL="https://${TOKEN}@github.com/Knoxx23/ebs-schulportal.git"
 
 # Check if already a git repo
 if [ ! -d ".git" ] || [ ! -f ".git/config" ]; then
