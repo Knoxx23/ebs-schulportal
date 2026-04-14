@@ -1,0 +1,642 @@
+export type Language = 'de' | 'en' | 'tr' | 'ar' | 'ua' | 'ru' | 'pl';
+
+export interface Translation {
+  // Common
+  next: string;
+  back: string;
+  save: string;
+  submit: string;
+  cancel: string;
+  loading: string;
+  error: string;
+  success: string;
+  required: string;
+
+  // Navigation
+  step: string;
+  of: string;
+
+  // Step titles
+  step1Title: string;
+  step2Title: string;
+  step3Title: string;
+  step4Title: string;
+  step5Title: string;
+
+  // Step 1 - Person
+  lastName: string;
+  firstName: string;
+  birthDate: string;
+  birthPlace: string;
+  gender: string;
+  genderMale: string;
+  genderFemale: string;
+  genderDiverse: string;
+  nationality: string;
+
+  // Step 2 - Family/Contact
+  guardian: string;
+  street: string;
+  zip: string;
+  city: string;
+  phone: string;
+  email: string;
+  addressSection: string;
+
+  // Step 3 - School history
+  kindergarten: string;
+  enrollmentYear: string;
+  enrollmentDate: string;
+
+  // Step 4 - Future path
+  futurePath: string;
+  futurePathA: string;
+  futurePathB: string;
+  futurePathC: string;
+  futurePathD: string;
+  futureSchool: string;
+  futureNotes: string;
+
+  // Step 5 - Confirm
+  reviewTitle: string;
+  confirmText: string;
+  confirmName: string;
+  confirmCheckbox: string;
+  submitSuccess: string;
+
+  // Status
+  statusDraft: string;
+  statusSubmitted: string;
+  statusReturned: string;
+  statusApproved: string;
+  statusArchived: string;
+
+  // Activation
+  activationTitle: string;
+  activationSubtitle: string;
+  tokenLabel: string;
+  codeLabel: string;
+  activateButton: string;
+  activationError: string;
+
+  // Status page
+  statusPageTitle: string;
+  statusDraftMsg: string;
+  statusSubmittedMsg: string;
+  statusReturnedMsg: string;
+  statusApprovedMsg: string;
+  returnNote: string;
+  continueForm: string;
+
+  // Validation
+  fieldRequired: string;
+  invalidEmail: string;
+  invalidDate: string;
+  invalidZip: string;
+  minLength: string;
+}
+
+const de: Translation = {
+  next: 'Weiter',
+  back: 'Zurück',
+  save: 'Speichern',
+  submit: 'Abschicken',
+  cancel: 'Abbrechen',
+  loading: 'Laden...',
+  error: 'Fehler',
+  success: 'Erfolgreich',
+  required: 'Pflichtfeld',
+  step: 'Schritt',
+  of: 'von',
+  step1Title: 'Angaben zur Person',
+  step2Title: 'Familie & Kontakt',
+  step3Title: 'Schullaufbahn',
+  step4Title: 'Künftige Tätigkeit',
+  step5Title: 'Prüfung & Bestätigung',
+  lastName: 'Nachname',
+  firstName: 'Vorname',
+  birthDate: 'Geburtsdatum',
+  birthPlace: 'Geburtsort',
+  gender: 'Geschlecht',
+  genderMale: 'Männlich',
+  genderFemale: 'Weiblich',
+  genderDiverse: 'Divers',
+  nationality: 'Staatsangehörigkeit',
+  guardian: 'Erziehungsberechtigte/r',
+  street: 'Straße und Hausnummer',
+  zip: 'Postleitzahl',
+  city: 'Ort',
+  phone: 'Telefonnummer',
+  email: 'E-Mail-Adresse',
+  addressSection: 'Adresse',
+  kindergarten: 'Kindergarten / Kita',
+  enrollmentYear: 'Einschulungsjahr',
+  enrollmentDate: 'Aufnahmedatum',
+  futurePath: 'Künftige Tätigkeit',
+  futurePathA: 'A – Weiterführende Schule',
+  futurePathB: 'B – Berufsausbildung',
+  futurePathC: 'C – Weiterhin Schule',
+  futurePathD: 'D – Sonstiges',
+  futureSchool: 'Name der Schule (falls bekannt)',
+  futureNotes: 'Bemerkungen',
+  reviewTitle: 'Überprüfen Sie Ihre Angaben',
+  confirmText: 'Ich bestätige, dass alle Angaben korrekt und vollständig sind.',
+  confirmName: 'Name zur Bestätigung',
+  confirmCheckbox: 'Ich bestätige die Richtigkeit aller Angaben',
+  submitSuccess: 'Ihr Einschulungsblatt wurde erfolgreich eingereicht.',
+  statusDraft: 'In Bearbeitung',
+  statusSubmitted: 'Eingereicht',
+  statusReturned: 'Zurückgegeben',
+  statusApproved: 'Genehmigt',
+  statusArchived: 'Archiviert',
+  activationTitle: 'Einschulungsblatt ausfüllen',
+  activationSubtitle: 'Bitte geben Sie den Token und den Code aus dem Anschreiben ein.',
+  tokenLabel: 'Aktivierungs-Token',
+  codeLabel: 'Aktivierungs-Code',
+  activateButton: 'Aktivieren',
+  activationError: 'Ungültiger Token oder Code. Bitte prüfen Sie Ihre Eingaben.',
+  statusPageTitle: 'Status Ihres Einschulungsblatts',
+  statusDraftMsg: 'Ihr Formular ist noch nicht abgeschickt.',
+  statusSubmittedMsg: 'Ihr Einschulungsblatt wurde eingereicht und wird bearbeitet.',
+  statusReturnedMsg: 'Ihr Einschulungsblatt wurde zurückgegeben. Bitte korrigieren Sie die Angaben.',
+  statusApprovedMsg: 'Ihr Einschulungsblatt wurde genehmigt.',
+  returnNote: 'Hinweis der Schule',
+  continueForm: 'Formular fortsetzen',
+  fieldRequired: 'Dieses Feld ist erforderlich',
+  invalidEmail: 'Bitte geben Sie eine gültige E-Mail-Adresse ein',
+  invalidDate: 'Bitte geben Sie ein gültiges Datum ein',
+  invalidZip: 'Bitte geben Sie eine gültige Postleitzahl ein',
+  minLength: 'Mindestlänge nicht erreicht',
+};
+
+const en: Translation = {
+  next: 'Next',
+  back: 'Back',
+  save: 'Save',
+  submit: 'Submit',
+  cancel: 'Cancel',
+  loading: 'Loading...',
+  error: 'Error',
+  success: 'Success',
+  required: 'Required',
+  step: 'Step',
+  of: 'of',
+  step1Title: 'Personal Information',
+  step2Title: 'Family & Contact',
+  step3Title: 'School History',
+  step4Title: 'Future Plans',
+  step5Title: 'Review & Confirm',
+  lastName: 'Last Name',
+  firstName: 'First Name',
+  birthDate: 'Date of Birth',
+  birthPlace: 'Place of Birth',
+  gender: 'Gender',
+  genderMale: 'Male',
+  genderFemale: 'Female',
+  genderDiverse: 'Diverse',
+  nationality: 'Nationality',
+  guardian: 'Guardian',
+  street: 'Street and House Number',
+  zip: 'Postal Code',
+  city: 'City',
+  phone: 'Phone Number',
+  email: 'Email Address',
+  addressSection: 'Address',
+  kindergarten: 'Kindergarten / Daycare',
+  enrollmentYear: 'Enrollment Year',
+  enrollmentDate: 'Enrollment Date',
+  futurePath: 'Future Plans',
+  futurePathA: 'A – Secondary School',
+  futurePathB: 'B – Vocational Training',
+  futurePathC: 'C – Continue Schooling',
+  futurePathD: 'D – Other',
+  futureSchool: 'School Name (if known)',
+  futureNotes: 'Notes',
+  reviewTitle: 'Review Your Information',
+  confirmText: 'I confirm that all information provided is correct and complete.',
+  confirmName: 'Name for Confirmation',
+  confirmCheckbox: 'I confirm the accuracy of all information',
+  submitSuccess: 'Your enrollment form has been successfully submitted.',
+  statusDraft: 'In Progress',
+  statusSubmitted: 'Submitted',
+  statusReturned: 'Returned',
+  statusApproved: 'Approved',
+  statusArchived: 'Archived',
+  activationTitle: 'Complete Enrollment Form',
+  activationSubtitle: 'Please enter the token and code from your invitation letter.',
+  tokenLabel: 'Activation Token',
+  codeLabel: 'Activation Code',
+  activateButton: 'Activate',
+  activationError: 'Invalid token or code. Please check your entries.',
+  statusPageTitle: 'Your Enrollment Form Status',
+  statusDraftMsg: 'Your form has not been submitted yet.',
+  statusSubmittedMsg: 'Your enrollment form has been submitted and is being processed.',
+  statusReturnedMsg: 'Your enrollment form was returned. Please correct the information.',
+  statusApprovedMsg: 'Your enrollment form has been approved.',
+  returnNote: 'Note from School',
+  continueForm: 'Continue Form',
+  fieldRequired: 'This field is required',
+  invalidEmail: 'Please enter a valid email address',
+  invalidDate: 'Please enter a valid date',
+  invalidZip: 'Please enter a valid postal code',
+  minLength: 'Minimum length not reached',
+};
+
+const tr: Translation = {
+  next: 'İleri',
+  back: 'Geri',
+  save: 'Kaydet',
+  submit: 'Gönder',
+  cancel: 'İptal',
+  loading: 'Yükleniyor...',
+  error: 'Hata',
+  success: 'Başarılı',
+  required: 'Zorunlu alan',
+  step: 'Adım',
+  of: '/',
+  step1Title: 'Kişisel Bilgiler',
+  step2Title: 'Aile ve İletişim',
+  step3Title: 'Okul Geçmişi',
+  step4Title: 'Gelecek Planları',
+  step5Title: 'İnceleme ve Onay',
+  lastName: 'Soyad',
+  firstName: 'Ad',
+  birthDate: 'Doğum Tarihi',
+  birthPlace: 'Doğum Yeri',
+  gender: 'Cinsiyet',
+  genderMale: 'Erkek',
+  genderFemale: 'Kadın',
+  genderDiverse: 'Diğer',
+  nationality: 'Uyruk',
+  guardian: 'Vasi / Ebeveyn',
+  street: 'Sokak ve Bina Numarası',
+  zip: 'Posta Kodu',
+  city: 'Şehir',
+  phone: 'Telefon Numarası',
+  email: 'E-posta Adresi',
+  addressSection: 'Adres',
+  kindergarten: 'Anaokulu / Kreş',
+  enrollmentYear: 'Kayıt Yılı',
+  enrollmentDate: 'Kayıt Tarihi',
+  futurePath: 'Gelecek Planları',
+  futurePathA: 'A – Ortaöğretim',
+  futurePathB: 'B – Mesleki Eğitim',
+  futurePathC: 'C – Okula Devam',
+  futurePathD: 'D – Diğer',
+  futureSchool: 'Okul Adı (biliniyorsa)',
+  futureNotes: 'Notlar',
+  reviewTitle: 'Bilgilerinizi İnceleyin',
+  confirmText: 'Verilen tüm bilgilerin doğru ve eksiksiz olduğunu onaylıyorum.',
+  confirmName: 'Onay için Ad',
+  confirmCheckbox: 'Tüm bilgilerin doğruluğunu onaylıyorum',
+  submitSuccess: 'Kayıt formunuz başarıyla gönderildi.',
+  statusDraft: 'Devam Ediyor',
+  statusSubmitted: 'Gönderildi',
+  statusReturned: 'İade Edildi',
+  statusApproved: 'Onaylandı',
+  statusArchived: 'Arşivlendi',
+  activationTitle: 'Kayıt Formunu Doldurun',
+  activationSubtitle: 'Davet mektubunuzdaki token ve kodu girin.',
+  tokenLabel: 'Aktivasyon Token',
+  codeLabel: 'Aktivasyon Kodu',
+  activateButton: 'Etkinleştir',
+  activationError: 'Geçersiz token veya kod. Lütfen girişlerinizi kontrol edin.',
+  statusPageTitle: 'Kayıt Formunuzun Durumu',
+  statusDraftMsg: 'Formunuz henüz gönderilmedi.',
+  statusSubmittedMsg: 'Kayıt formunuz gönderildi ve işleniyor.',
+  statusReturnedMsg: 'Kayıt formunuz iade edildi. Lütfen bilgileri düzeltin.',
+  statusApprovedMsg: 'Kayıt formunuz onaylandı.',
+  returnNote: 'Okuldan Not',
+  continueForm: 'Forma Devam Et',
+  fieldRequired: 'Bu alan zorunludur',
+  invalidEmail: 'Lütfen geçerli bir e-posta adresi girin',
+  invalidDate: 'Lütfen geçerli bir tarih girin',
+  invalidZip: 'Lütfen geçerli bir posta kodu girin',
+  minLength: 'Minimum uzunluğa ulaşılmadı',
+};
+
+const ar: Translation = {
+  next: 'التالي',
+  back: 'السابق',
+  save: 'حفظ',
+  submit: 'إرسال',
+  cancel: 'إلغاء',
+  loading: 'جار التحميل...',
+  error: 'خطأ',
+  success: 'نجاح',
+  required: 'حقل مطلوب',
+  step: 'خطوة',
+  of: 'من',
+  step1Title: 'المعلومات الشخصية',
+  step2Title: 'العائلة والتواصل',
+  step3Title: 'السجل المدرسي',
+  step4Title: 'الخطط المستقبلية',
+  step5Title: 'المراجعة والتأكيد',
+  lastName: 'اسم العائلة',
+  firstName: 'الاسم الأول',
+  birthDate: 'تاريخ الميلاد',
+  birthPlace: 'مكان الميلاد',
+  gender: 'الجنس',
+  genderMale: 'ذكر',
+  genderFemale: 'أنثى',
+  genderDiverse: 'متنوع',
+  nationality: 'الجنسية',
+  guardian: 'ولي الأمر',
+  street: 'الشارع ورقم المبنى',
+  zip: 'الرمز البريدي',
+  city: 'المدينة',
+  phone: 'رقم الهاتف',
+  email: 'البريد الإلكتروني',
+  addressSection: 'العنوان',
+  kindergarten: 'روضة الأطفال',
+  enrollmentYear: 'سنة التسجيل',
+  enrollmentDate: 'تاريخ القبول',
+  futurePath: 'الخطط المستقبلية',
+  futurePathA: 'أ – المدرسة الثانوية',
+  futurePathB: 'ب – التدريب المهني',
+  futurePathC: 'ج – الاستمرار في الدراسة',
+  futurePathD: 'د – أخرى',
+  futureSchool: 'اسم المدرسة (إن عُرف)',
+  futureNotes: 'ملاحظات',
+  reviewTitle: 'مراجعة معلوماتك',
+  confirmText: 'أؤكد أن جميع المعلومات المقدمة صحيحة وكاملة.',
+  confirmName: 'الاسم للتأكيد',
+  confirmCheckbox: 'أؤكد دقة جميع المعلومات',
+  submitSuccess: 'تم إرسال نموذج التسجيل بنجاح.',
+  statusDraft: 'قيد التنفيذ',
+  statusSubmitted: 'تم الإرسال',
+  statusReturned: 'تم الإرجاع',
+  statusApproved: 'تمت الموافقة',
+  statusArchived: 'مؤرشف',
+  activationTitle: 'استكمال نموذج التسجيل',
+  activationSubtitle: 'يرجى إدخال الرمز المميز والكود من رسالة الدعوة.',
+  tokenLabel: 'رمز التفعيل',
+  codeLabel: 'كود التفعيل',
+  activateButton: 'تفعيل',
+  activationError: 'رمز مميز أو كود غير صالح. يرجى التحقق من إدخالاتك.',
+  statusPageTitle: 'حالة نموذج التسجيل',
+  statusDraftMsg: 'لم يتم إرسال نموذجك بعد.',
+  statusSubmittedMsg: 'تم إرسال نموذج التسجيل وجار معالجته.',
+  statusReturnedMsg: 'تم إرجاع نموذج التسجيل. يرجى تصحيح المعلومات.',
+  statusApprovedMsg: 'تمت الموافقة على نموذج التسجيل.',
+  returnNote: 'ملاحظة من المدرسة',
+  continueForm: 'متابعة النموذج',
+  fieldRequired: 'هذا الحقل مطلوب',
+  invalidEmail: 'يرجى إدخال عنوان بريد إلكتروني صالح',
+  invalidDate: 'يرجى إدخال تاريخ صالح',
+  invalidZip: 'يرجى إدخال رمز بريدي صالح',
+  minLength: 'لم يتم بلوغ الحد الأدنى للطول',
+};
+
+const ua: Translation = {
+  next: 'Далі',
+  back: 'Назад',
+  save: 'Зберегти',
+  submit: 'Надіслати',
+  cancel: 'Скасувати',
+  loading: 'Завантаження...',
+  error: 'Помилка',
+  success: 'Успішно',
+  required: "Обов'язкове поле",
+  step: 'Крок',
+  of: 'з',
+  step1Title: 'Особиста інформація',
+  step2Title: "Сім'я і контакт",
+  step3Title: 'Шкільна історія',
+  step4Title: 'Майбутні плани',
+  step5Title: 'Перегляд і підтвердження',
+  lastName: 'Прізвище',
+  firstName: "Ім'я",
+  birthDate: 'Дата народження',
+  birthPlace: 'Місце народження',
+  gender: 'Стать',
+  genderMale: 'Чоловіча',
+  genderFemale: 'Жіноча',
+  genderDiverse: 'Інша',
+  nationality: 'Громадянство',
+  guardian: 'Опікун / Батько/мати',
+  street: 'Вулиця і номер будинку',
+  zip: 'Поштовий індекс',
+  city: 'Місто',
+  phone: 'Номер телефону',
+  email: 'Електронна пошта',
+  addressSection: 'Адреса',
+  kindergarten: 'Дитячий садок',
+  enrollmentYear: 'Рік зарахування',
+  enrollmentDate: 'Дата прийому',
+  futurePath: 'Майбутні плани',
+  futurePathA: 'А – Середня школа',
+  futurePathB: 'Б – Професійне навчання',
+  futurePathC: 'В – Продовження навчання',
+  futurePathD: 'Г – Інше',
+  futureSchool: 'Назва школи (якщо відомо)',
+  futureNotes: 'Примітки',
+  reviewTitle: 'Перевірте свою інформацію',
+  confirmText: 'Я підтверджую, що вся надана інформація є правильною і повною.',
+  confirmName: "Ім'я для підтвердження",
+  confirmCheckbox: 'Я підтверджую точність усієї інформації',
+  submitSuccess: 'Вашу форму зарахування успішно надіслано.',
+  statusDraft: 'В процесі',
+  statusSubmitted: 'Надіслано',
+  statusReturned: 'Повернено',
+  statusApproved: 'Затверджено',
+  statusArchived: 'Заархівовано',
+  activationTitle: 'Заповнення форми зарахування',
+  activationSubtitle: 'Будь ласка, введіть токен і код з листа-запрошення.',
+  tokenLabel: 'Токен активації',
+  codeLabel: 'Код активації',
+  activateButton: 'Активувати',
+  activationError: 'Недійсний токен або код. Перевірте свої записи.',
+  statusPageTitle: 'Статус вашої форми зарахування',
+  statusDraftMsg: 'Вашу форму ще не надіслано.',
+  statusSubmittedMsg: 'Вашу форму зарахування надіслано і вона обробляється.',
+  statusReturnedMsg: 'Вашу форму зарахування повернено. Виправте інформацію.',
+  statusApprovedMsg: 'Вашу форму зарахування затверджено.',
+  returnNote: 'Примітка від школи',
+  continueForm: 'Продовжити форму',
+  fieldRequired: 'Це поле є обов\'язковим',
+  invalidEmail: 'Будь ласка, введіть дійсну адресу електронної пошти',
+  invalidDate: 'Будь ласка, введіть дійсну дату',
+  invalidZip: 'Будь ласка, введіть дійсний поштовий індекс',
+  minLength: 'Мінімальна довжина не досягнута',
+};
+
+const ru: Translation = {
+  next: 'Далее',
+  back: 'Назад',
+  save: 'Сохранить',
+  submit: 'Отправить',
+  cancel: 'Отмена',
+  loading: 'Загрузка...',
+  error: 'Ошибка',
+  success: 'Успешно',
+  required: 'Обязательное поле',
+  step: 'Шаг',
+  of: 'из',
+  step1Title: 'Личная информация',
+  step2Title: 'Семья и контакты',
+  step3Title: 'История обучения',
+  step4Title: 'Будущие планы',
+  step5Title: 'Проверка и подтверждение',
+  lastName: 'Фамилия',
+  firstName: 'Имя',
+  birthDate: 'Дата рождения',
+  birthPlace: 'Место рождения',
+  gender: 'Пол',
+  genderMale: 'Мужской',
+  genderFemale: 'Женский',
+  genderDiverse: 'Иной',
+  nationality: 'Гражданство',
+  guardian: 'Опекун / Родитель',
+  street: 'Улица и номер дома',
+  zip: 'Почтовый индекс',
+  city: 'Город',
+  phone: 'Номер телефона',
+  email: 'Адрес электронной почты',
+  addressSection: 'Адрес',
+  kindergarten: 'Детский сад',
+  enrollmentYear: 'Год зачисления',
+  enrollmentDate: 'Дата приёма',
+  futurePath: 'Будущие планы',
+  futurePathA: 'А – Средняя школа',
+  futurePathB: 'Б – Профессиональное обучение',
+  futurePathC: 'В – Продолжение учёбы',
+  futurePathD: 'Г – Прочее',
+  futureSchool: 'Название школы (если известно)',
+  futureNotes: 'Заметки',
+  reviewTitle: 'Проверьте свою информацию',
+  confirmText: 'Я подтверждаю, что вся предоставленная информация верна и полна.',
+  confirmName: 'Имя для подтверждения',
+  confirmCheckbox: 'Я подтверждаю точность всей информации',
+  submitSuccess: 'Ваша форма зачисления успешно отправлена.',
+  statusDraft: 'В процессе',
+  statusSubmitted: 'Отправлено',
+  statusReturned: 'Возвращено',
+  statusApproved: 'Одобрено',
+  statusArchived: 'Архивировано',
+  activationTitle: 'Заполнение формы зачисления',
+  activationSubtitle: 'Пожалуйста, введите токен и код из письма-приглашения.',
+  tokenLabel: 'Токен активации',
+  codeLabel: 'Код активации',
+  activateButton: 'Активировать',
+  activationError: 'Недействительный токен или код. Проверьте ваши записи.',
+  statusPageTitle: 'Статус вашей формы зачисления',
+  statusDraftMsg: 'Ваша форма ещё не отправлена.',
+  statusSubmittedMsg: 'Ваша форма зачисления отправлена и обрабатывается.',
+  statusReturnedMsg: 'Ваша форма зачисления возвращена. Исправьте информацию.',
+  statusApprovedMsg: 'Ваша форма зачисления одобрена.',
+  returnNote: 'Примечание от школы',
+  continueForm: 'Продолжить заполнение',
+  fieldRequired: 'Это поле обязательно',
+  invalidEmail: 'Пожалуйста, введите действительный адрес электронной почты',
+  invalidDate: 'Пожалуйста, введите действительную дату',
+  invalidZip: 'Пожалуйста, введите действительный почтовый индекс',
+  minLength: 'Минимальная длина не достигнута',
+};
+
+const pl: Translation = {
+  next: 'Dalej',
+  back: 'Wstecz',
+  save: 'Zapisz',
+  submit: 'Wyślij',
+  cancel: 'Anuluj',
+  loading: 'Ładowanie...',
+  error: 'Błąd',
+  success: 'Sukces',
+  required: 'Pole wymagane',
+  step: 'Krok',
+  of: 'z',
+  step1Title: 'Dane osobowe',
+  step2Title: 'Rodzina i kontakt',
+  step3Title: 'Historia szkolna',
+  step4Title: 'Plany na przyszłość',
+  step5Title: 'Przegląd i potwierdzenie',
+  lastName: 'Nazwisko',
+  firstName: 'Imię',
+  birthDate: 'Data urodzenia',
+  birthPlace: 'Miejsce urodzenia',
+  gender: 'Płeć',
+  genderMale: 'Mężczyzna',
+  genderFemale: 'Kobieta',
+  genderDiverse: 'Inne',
+  nationality: 'Obywatelstwo',
+  guardian: 'Opiekun / Rodzic',
+  street: 'Ulica i numer budynku',
+  zip: 'Kod pocztowy',
+  city: 'Miasto',
+  phone: 'Numer telefonu',
+  email: 'Adres e-mail',
+  addressSection: 'Adres',
+  kindergarten: 'Przedszkole / Żłobek',
+  enrollmentYear: 'Rok zapisania',
+  enrollmentDate: 'Data przyjęcia',
+  futurePath: 'Plany na przyszłość',
+  futurePathA: 'A – Szkoła średnia',
+  futurePathB: 'B – Kształcenie zawodowe',
+  futurePathC: 'C – Kontynuacja nauki',
+  futurePathD: 'D – Inne',
+  futureSchool: 'Nazwa szkoły (jeśli znana)',
+  futureNotes: 'Uwagi',
+  reviewTitle: 'Sprawdź swoje dane',
+  confirmText: 'Potwierdzam, że wszystkie podane informacje są prawidłowe i kompletne.',
+  confirmName: 'Imię do potwierdzenia',
+  confirmCheckbox: 'Potwierdzam dokładność wszystkich informacji',
+  submitSuccess: 'Formularz zapisania został pomyślnie wysłany.',
+  statusDraft: 'W trakcie',
+  statusSubmitted: 'Wysłano',
+  statusReturned: 'Zwrócono',
+  statusApproved: 'Zatwierdzone',
+  statusArchived: 'Zarchiwizowane',
+  activationTitle: 'Wypełnij formularz zapisania',
+  activationSubtitle: 'Proszę wpisać token i kod z listu z zaproszeniem.',
+  tokenLabel: 'Token aktywacyjny',
+  codeLabel: 'Kod aktywacyjny',
+  activateButton: 'Aktywuj',
+  activationError: 'Nieprawidłowy token lub kod. Sprawdź swoje wpisy.',
+  statusPageTitle: 'Status formularza zapisania',
+  statusDraftMsg: 'Twój formularz nie został jeszcze wysłany.',
+  statusSubmittedMsg: 'Twój formularz zapisania został wysłany i jest przetwarzany.',
+  statusReturnedMsg: 'Twój formularz zapisania został zwrócony. Popraw informacje.',
+  statusApprovedMsg: 'Twój formularz zapisania został zatwierdzony.',
+  returnNote: 'Uwaga od szkoły',
+  continueForm: 'Kontynuuj formularz',
+  fieldRequired: 'To pole jest wymagane',
+  invalidEmail: 'Proszę wpisać prawidłowy adres e-mail',
+  invalidDate: 'Proszę wpisać prawidłową datę',
+  invalidZip: 'Proszę wpisać prawidłowy kod pocztowy',
+  minLength: 'Minimalna długość nie osiągnięta',
+};
+
+export const translations: Record<Language, Translation> = {
+  de,
+  en,
+  tr,
+  ar,
+  ua,
+  ru,
+  pl,
+};
+
+export const languageNames: Record<Language, string> = {
+  de: 'Deutsch',
+  en: 'English',
+  tr: 'Türkçe',
+  ar: 'العربية',
+  ua: 'Українська',
+  ru: 'Русский',
+  pl: 'Polski',
+};
+
+export const languageDir: Record<Language, 'ltr' | 'rtl'> = {
+  de: 'ltr',
+  en: 'ltr',
+  tr: 'ltr',
+  ar: 'rtl',
+  ua: 'ltr',
+  ru: 'ltr',
+  pl: 'ltr',
+};
+
+export function useTranslation(lang: Language) {
+  return translations[lang] || translations.de;
+}
