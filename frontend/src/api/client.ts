@@ -141,4 +141,10 @@ export const documentsApi = {
     apiClient.get(`/documents/${caseId}`, { responseType: 'blob' }),
 };
 
+// Parent Letter API
+export const parentLetterApi = {
+  download: (invitationId: number | string) =>
+    apiClient.get(`/parent-letter/${invitationId}`, { responseType: 'blob' }),
+};
+
 export default apiClient;

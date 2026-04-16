@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { casesApi, invitationsApi, authApi } from '../../api/client';
+import { casesApi, invitationsApi, authApi, parentLetterApi } from '../../api/client';
 import { useAuthStore } from '../../stores/authStore';
 import StatusBadge from '../../components/StatusBadge';
 
@@ -587,6 +587,26 @@ export default function DashboardPage() {
                                   Fall öffnen
                                 </button>
                               )}
+                              <button
+                                onClick={async () => {
+                                  try {
+                                    const res = await parentLetterApi.download(inv.id);
+                                    const url = URL.createObjectURL(new Blob([res.data], { type: 'application/pdf' }));
+                                    const a = document.createElement('a');
+                                    a.href = url;
+                                    const name = [inv.child_last_name, inv.child_first_name].filter(Boolean).join('_') || 'Elternbrief';
+                                    a.download = `Elternbrief_${name}.pdf`;
+                                    a.click();
+                                    URL.revokeObjectURL(url);
+                                  } catch {
+                                    alert('Fehler beim Erstellen des Elternbriefs.');
+                                  }
+                                }}
+                                className="text-green-600 hover:text-green-800 text-xs font-medium"
+                                title="Elternbrief mit QR-Code drucken"
+                              >
+                                🖨 Elternbrief
+                              </button>
                               {(inv.status === 'pending' || inv.status === 'activated') && (
                                 <button
                                   onClick={() => handleRevokeInvitation(inv.id)}

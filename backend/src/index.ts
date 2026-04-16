@@ -23,6 +23,7 @@ import invitationsRouter from './routes/invitations';
 import documentsRouter from './routes/documents';
 import adminRouter from './routes/admin';
 import passwordResetRouter from './routes/passwordReset';
+import parentLetterRouter from './routes/parentLetter';
 import { startReminderService } from './services/reminderService';
 import { startRetentionService } from './services/retentionService';
 import { logError } from './services/loggerService';
@@ -116,6 +117,7 @@ app.use('/api/cases', casesRouter);
 app.use('/api/invitations', invitationsRouter);
 app.use('/api/documents', documentsRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/parent-letter', parentLetterRouter);
 
 // Health check
 app.get('/api/health', (_req, res) => {
