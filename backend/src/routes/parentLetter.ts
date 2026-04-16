@@ -14,8 +14,10 @@ router.get('/:invitationId', requireRole('admin', 'secretary', 'teacher', 'princ
   if (!invitation) {
     return res.status(404).json({ error: 'Einladung nicht gefunden' });
   }
-
-  const origin = req.headers.origin || req.headers.referer?.replace(/\/$/, '') || process.env.FRONTEND_URL || 'http://localhost:5173';
+  // Build the correct public URL from the request host
+  const protocol = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+  const host = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:5173';
+  const origin = process.env.FRONTEND_URL || `${protocol}://${host}`;
   const activationUrl = `${origin}/activate?token=${invitation.token}`;
 
   // Generate QR code as PNG buffer
