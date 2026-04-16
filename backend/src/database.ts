@@ -306,7 +306,18 @@ export async function initDatabase(): Promise<void> {
     { col: 'guardian_2_last_name', def: 'TEXT' },
     { col: 'guardian_2_first_name',def: 'TEXT' },
     { col: 'guardian_2_birth_country', def: 'TEXT' },
-    // Step 3 - School history
+    // Step 2 - Guardian addresses (separate for each parent)
+    { col: 'guardian_1_street',      def: 'TEXT' },
+    { col: 'guardian_1_zip',         def: 'TEXT' },
+    { col: 'guardian_1_city',        def: 'TEXT' },
+    { col: 'guardian_1_phone',       def: 'TEXT' },
+    { col: 'guardian_2_street',      def: 'TEXT' },
+    { col: 'guardian_2_zip',         def: 'TEXT' },
+    { col: 'guardian_2_city',        def: 'TEXT' },
+    { col: 'guardian_2_phone',       def: 'TEXT' },
+    // Step 3 - School history (enrollment/transition years)
+    { col: 'enrollment_year',        def: 'TEXT' },
+    { col: 'transition_year',        def: 'TEXT' },
     { col: 'last_school_type',     def: 'TEXT' },
     { col: 'last_school_name',     def: 'TEXT' },
     { col: 'graduation_expected',  def: 'TEXT' },

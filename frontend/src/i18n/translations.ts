@@ -46,6 +46,7 @@ export interface Translation {
   // Step 3 - School history
   kindergarten: string;
   enrollmentYear: string;
+  transitionYear: string;
   enrollmentDate: string;
 
   // Step 4 - Future path
@@ -170,6 +171,7 @@ const de: Translation = {
   addressSection: 'Adresse',
   kindergarten: 'Kindergarten / Kita',
   enrollmentYear: 'Einschulungsjahr',
+  transitionYear: 'Übergang in Klasse 5',
   enrollmentDate: 'Aufnahmedatum',
   futurePath: 'Künftige Tätigkeit',
   futurePathA: 'A – Weiterführende Schule',
@@ -278,6 +280,7 @@ const en: Translation = {
   addressSection: 'Address',
   kindergarten: 'Kindergarten / Daycare',
   enrollmentYear: 'Enrollment Year',
+  transitionYear: 'Transition to Class 5',
   enrollmentDate: 'Enrollment Date',
   futurePath: 'Future Plans',
   futurePathA: 'A – Secondary School',
@@ -386,6 +389,7 @@ const tr: Translation = {
   addressSection: 'Adres',
   kindergarten: 'Anaokulu / Kreş',
   enrollmentYear: 'Kayıt Yılı',
+  transitionYear: '5. Sınıfa Geçiş Yılı',
   enrollmentDate: 'Kayıt Tarihi',
   futurePath: 'Gelecek Planları',
   futurePathA: 'A – Ortaöğretim',
@@ -494,6 +498,7 @@ const ar: Translation = {
   addressSection: 'العنوان',
   kindergarten: 'روضة الأطفال',
   enrollmentYear: 'سنة التسجيل',
+  transitionYear: 'سنة الانتقال إلى الصف 5',
   enrollmentDate: 'تاريخ القبول',
   futurePath: 'الخطط المستقبلية',
   futurePathA: 'أ – المدرسة الثانوية',
@@ -602,6 +607,7 @@ const ua: Translation = {
   addressSection: 'Адреса',
   kindergarten: 'Дитячий садок',
   enrollmentYear: 'Рік зарахування',
+  transitionYear: 'Перехід до 5 класу',
   enrollmentDate: 'Дата прийому',
   futurePath: 'Майбутні плани',
   futurePathA: 'А – Середня школа',
@@ -710,6 +716,7 @@ const ru: Translation = {
   addressSection: 'Адрес',
   kindergarten: 'Детский сад',
   enrollmentYear: 'Год зачисления',
+  transitionYear: 'Переход в 5 класс',
   enrollmentDate: 'Дата приёма',
   futurePath: 'Будущие планы',
   futurePathA: 'А – Средняя школа',
@@ -818,6 +825,7 @@ const pl: Translation = {
   addressSection: 'Adres',
   kindergarten: 'Przedszkole / Żłobek',
   enrollmentYear: 'Rok zapisania',
+  transitionYear: 'Przejście do klasy 5',
   enrollmentDate: 'Data przyjęcia',
   futurePath: 'Plany na przyszłość',
   futurePathA: 'A – Szkoła średnia',

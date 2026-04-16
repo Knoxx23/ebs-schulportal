@@ -55,12 +55,21 @@ export interface CaseData {
   guardian_1_last_name?: string;
   guardian_1_first_name?: string;
   guardian_1_birth_country?: string;
+  guardian_1_street?: string;
+  guardian_1_zip?: string;
+  guardian_1_city?: string;
+  guardian_1_phone?: string;
   guardian_2_last_name?: string;
   guardian_2_first_name?: string;
   guardian_2_birth_country?: string;
+  guardian_2_street?: string;
+  guardian_2_zip?: string;
+  guardian_2_city?: string;
+  guardian_2_phone?: string;
   // Step 3 - School history
   kindergarten?: string;
   enrollment_year?: string;
+  transition_year?: string;
   enrollment_date?: string;
   last_school_type?: string;
   last_school_name?: string;

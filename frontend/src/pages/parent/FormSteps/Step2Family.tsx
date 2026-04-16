@@ -16,9 +16,17 @@ const schema = z.object({
   guardian_1_last_name: z.string().optional(),
   guardian_1_first_name: z.string().optional(),
   guardian_1_birth_country: z.string().optional(),
+  guardian_1_street: z.string().optional(),
+  guardian_1_zip: z.string().optional(),
+  guardian_1_city: z.string().optional(),
+  guardian_1_phone: z.string().optional(),
   guardian_2_last_name: z.string().optional(),
   guardian_2_first_name: z.string().optional(),
   guardian_2_birth_country: z.string().optional(),
+  guardian_2_street: z.string().optional(),
+  guardian_2_zip: z.string().optional(),
+  guardian_2_city: z.string().optional(),
+  guardian_2_phone: z.string().optional(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -48,9 +56,17 @@ export default function Step2Family({ data, t, onNext, onBack }: Step2Props) {
       guardian_1_last_name: data.guardian_1_last_name || '',
       guardian_1_first_name: data.guardian_1_first_name || '',
       guardian_1_birth_country: data.guardian_1_birth_country || '',
+      guardian_1_street: data.guardian_1_street || '',
+      guardian_1_zip: data.guardian_1_zip || '',
+      guardian_1_city: data.guardian_1_city || '',
+      guardian_1_phone: data.guardian_1_phone || '',
       guardian_2_last_name: data.guardian_2_last_name || '',
       guardian_2_first_name: data.guardian_2_first_name || '',
       guardian_2_birth_country: data.guardian_2_birth_country || '',
+      guardian_2_street: data.guardian_2_street || '',
+      guardian_2_zip: data.guardian_2_zip || '',
+      guardian_2_city: data.guardian_2_city || '',
+      guardian_2_phone: data.guardian_2_phone || '',
     },
   });
 
@@ -152,7 +168,7 @@ export default function Step2Family({ data, t, onNext, onBack }: Step2Props) {
         <h3 className="font-medium text-gray-700 text-sm border-b border-gray-100 pb-2">{t.guardian}</h3>
 
         {/* Vater */}
-        <div>
+        <div className="border border-gray-100 rounded-lg p-4 space-y-3">
           <p className="text-xs font-semibold text-gray-500 uppercase mb-2">{t.guardianFatherName}</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="form-group">
@@ -171,10 +187,32 @@ export default function Step2Family({ data, t, onNext, onBack }: Step2Props) {
                 {...register('guardian_1_birth_country')} placeholder={t.placeholderCountry} />
             </div>
           </div>
+          <div className="form-group">
+            <label className="label" htmlFor="guardian_1_street">{t.street}</label>
+            <input id="guardian_1_street" type="text" className="input"
+              {...register('guardian_1_street')} placeholder="Musterstraße 1" />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_1_zip">{t.zip}</label>
+              <input id="guardian_1_zip" type="text" className="input"
+                {...register('guardian_1_zip')} placeholder="47000" />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_1_city">{t.city}</label>
+              <input id="guardian_1_city" type="text" className="input"
+                {...register('guardian_1_city')} placeholder="Musterstadt" />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="guardian_1_phone">{t.phone}</label>
+            <input id="guardian_1_phone" type="tel" className="input"
+              {...register('guardian_1_phone')} placeholder="+49 123 456789" />
+          </div>
         </div>
 
         {/* Mutter */}
-        <div>
+        <div className="border border-gray-100 rounded-lg p-4 space-y-3">
           <p className="text-xs font-semibold text-gray-500 uppercase mb-2">{t.guardianMotherName}</p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="form-group">
@@ -192,6 +230,28 @@ export default function Step2Family({ data, t, onNext, onBack }: Step2Props) {
               <input id="guardian_2_birth_country" type="text" className="input"
                 {...register('guardian_2_birth_country')} placeholder={t.placeholderCountry} />
             </div>
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="guardian_2_street">{t.street}</label>
+            <input id="guardian_2_street" type="text" className="input"
+              {...register('guardian_2_street')} placeholder="Musterstraße 1" />
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_2_zip">{t.zip}</label>
+              <input id="guardian_2_zip" type="text" className="input"
+                {...register('guardian_2_zip')} placeholder="47000" />
+            </div>
+            <div className="form-group">
+              <label className="label" htmlFor="guardian_2_city">{t.city}</label>
+              <input id="guardian_2_city" type="text" className="input"
+                {...register('guardian_2_city')} placeholder="Musterstadt" />
+            </div>
+          </div>
+          <div className="form-group">
+            <label className="label" htmlFor="guardian_2_phone">{t.phone}</label>
+            <input id="guardian_2_phone" type="tel" className="input"
+              {...register('guardian_2_phone')} placeholder="+49 123 456789" />
           </div>
         </div>
       </div>

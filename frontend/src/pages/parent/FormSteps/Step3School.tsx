@@ -6,6 +6,7 @@ import { CaseData } from '../../../stores/authStore';
 interface FormData {
   kindergarten: string;
   enrollment_year: string;
+  transition_year: string;
   enrollment_date: string;
   last_school_type: string;
   last_school_name: string;
@@ -39,6 +40,7 @@ export default function Step3School({ data, t, onNext, onBack }: Step3Props) {
     defaultValues: {
       kindergarten: data.kindergarten || '',
       enrollment_year: data.enrollment_year || '',
+      transition_year: data.transition_year || '',
       enrollment_date: data.enrollment_date || '',
       last_school_type: data.last_school_type || '',
       last_school_name: data.last_school_name || '',
@@ -69,21 +71,35 @@ export default function Step3School({ data, t, onNext, onBack }: Step3Props) {
             {...register('enrollment_year')}
           >
             <option value="">— Bitte wählen —</option>
-            {getYearOptions().map(year => (
+            {Array.from({length: 30}, (_, i) => new Date().getFullYear() - i).map(year => (
               <option key={year} value={year}>{year}</option>
             ))}
           </select>
         </div>
 
         <div className="form-group">
-          <label className="label" htmlFor="enrollment_date">{t.enrollmentDate}</label>
-          <input
-            id="enrollment_date"
-            type="date"
+          <label className="label" htmlFor="transition_year">{t.transitionYear || 'Übergang in Klasse 5'}</label>
+          <select
+            id="transition_year"
             className="input"
-            {...register('enrollment_date')}
-          />
+            {...register('transition_year')}
+          >
+            <option value="">— Bitte wählen —</option>
+            {Array.from({length: 20}, (_, i) => new Date().getFullYear() - i).map(year => (
+              <option key={year} value={year}>{year}</option>
+            ))}
+          </select>
         </div>
+      </div>
+
+      <div className="form-group">
+        <label className="label" htmlFor="enrollment_date">{t.enrollmentDate}</label>
+        <input
+          id="enrollment_date"
+          type="date"
+          className="input"
+          {...register('enrollment_date')}
+        />
       </div>
 
       {/* Last school */}
