@@ -14,10 +14,12 @@ router.get('/:invitationId', requireRole('admin', 'secretary', 'teacher', 'princ
   if (!invitation) {
     return res.status(404).json({ error: 'Einladung nicht gefunden' });
   }
-  // Build the correct public URL from the request host
-  const protocol = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
-  const host = req.headers['x-forwarded-host'] || req.headers.host || 'localhost:5173';
-  const origin = process.env.FRONTEND_URL || `${protocol}://${host}`;
+  // Build the correct public URL - prefer env var, then forwarded headers, then request host
+  const protocol = (req.headers['x-forwarded-proto'] as string) || (req.secure ? 'https' : 'http');
+  const host = (req.headers['x-forwarded-host'] as string) || req.headers.host || '';
+  // Filter out internal Docker/container hostnames (localhost, 127.x, container IDs)
+  const isInternal = !host || host.startsWith('localhost') || host.startsWith('127.') || /^[a-f0-9]{12}(:\d+)?$/.test(host);
+  const origin = process.env.FRONTEND_URL || (isInternal ? '' : `${protocol}://${host}`) || 'https://a524qsczongphs0jrb5y8in4.178.104.45.32.sslip.io';
   const activationUrl = `${origin}/activate?token=${invitation.token}`;
 
   // Generate QR code as PNG buffer
